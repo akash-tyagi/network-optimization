@@ -1,3 +1,4 @@
+#include "source_header.h"
 #include "graph.h"
 
 /*
@@ -38,25 +39,25 @@ struct Graph* constructGraph() {
 	return g;
 }
 
-void fillAdjacencyList(struct Graph *g) {
+void fillAdjacencyList(struct Graph *graph) {
 	printf("...Filling List...\n");
 	int i, v, j;
 	time_t t;
 	srand((unsigned) time(&t));
 
-	for (i = 0; i < g->totalVertices; i++) {
-		int values[g->totalVertices];
-		memset(values, 0, g->totalVertices * sizeof(int));
+	for (i = 0; i < graph->totalVertices; i++) {
+		int values[graph->totalVertices];
+		memset(values, 0, graph->totalVertices * sizeof(int));
 		for (j = 0; j < MAX_DEGREES; j++) {
 			do {
-				v = rand() % g->totalVertices;
+				v = rand() % graph->totalVertices;
 			} while (values[v] != 0);
 			values[v] = 1;
 			struct Node *new = malloc(sizeof(struct Node));
 			new->val = v;
 			new->weight = rand() % 5000;
-			new->next = g->list[i].next;
-			g->list[i].next = new;
+			new->next = graph->list[i].next;
+			graph->list[i].next = new;
 		}
 	}
 	printf("...Graph Filling Complete\n");
