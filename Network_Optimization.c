@@ -8,15 +8,34 @@
  ============================================================================
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "Network_Optimization.h"
 
-struct node {
-	int v;
-};
+struct Graph* generate_graph_type_1() {
+	struct Graph *graph = constructGraph();
+	fillAdjacencyList(graph, TYPE_1_DEGREE);
+	return graph;
+}
+
+struct Graph* generate_graph_type_2() {
+	struct Graph *graph = constructGraph();
+	fillAdjacencyList(graph, TYPE_2_DEGREE);
+	return graph;
+}
 
 int main(void) {
-	puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */
-	printf("%ld", sizeof(struct node*));
+	clock_t start = clock();
+	double cpu_time;
+
+	struct Graph *graph = constructGraph();
+	if (graph == NULL) {
+		printf("Memory Allocation Failed");
+		exit(1);
+	}
+
+	fillAdjacencyList(graph, 6);
+	printGraph(graph);
+
+	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
+	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
 	return EXIT_SUCCESS;
 }
