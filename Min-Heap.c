@@ -17,7 +17,7 @@ struct Heap* create() {
 	return heap;
 }
 
-void insert(struct Heap *heap, int vertex, int edge_weight) {
+void insert_heap(struct Heap *heap, int vertex, int edge_weight) {
 	if (heap->curr_size == heap->max_size) {
 		printf("Heap Insertion Failed: HEAP FULL \n");
 		exit(1);
@@ -30,7 +30,7 @@ void insert(struct Heap *heap, int vertex, int edge_weight) {
 
 	while (parentIndex(index) >= 0
 			&& heap->D[heap->A[parentIndex(index)]] > heap->D[heap->A[index]]) {
-		swap(heap, parentIndex(index), index);
+		swap_heap_elements(heap, parentIndex(index), index);
 		index = parentIndex(index);
 	}
 }
@@ -51,11 +51,11 @@ void heapify(struct Heap *heap, int index) {
 	}
 	if (min == index)
 		return;
-	swap(heap, index, min);
+	swap_heap_elements(heap, index, min);
 	heapify(heap, min);
 }
 
-void swap(struct Heap *heap, int index1, int index2) {
+void swap_heap_elements(struct Heap *heap, int index1, int index2) {
 	int temp;
 	temp = heap->A[index1];
 	heap->A[index1] = heap->A[index2];
@@ -113,7 +113,7 @@ main() {
 	while (vertex < MAX_SIZE) {
 		edge_weight = rand() % MAX_WEIGHT;
 		PRINT(vertex, edge_weight);
-		insert(heap, vertex++, edge_weight);
+		insert_heap(heap, vertex++, edge_weight);
 	}
 
 	print_sorted_heap(heap);

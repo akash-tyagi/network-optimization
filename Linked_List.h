@@ -8,12 +8,20 @@
 #include "Source_Header.h"
 #ifndef LINKED_LIST_H_
 #define LINKED_LIST_H_
-struct list_node {
+
+struct List_Node {
 	int vertex;
 	int dist;
-	struct list_node* next;
+	struct List_Node* next;
 };
 
-void insert_list(struct list_node**, int, int);
-struct list_node* get_max_fringe(struct list_node *);
+/*insert a node in the starting of the list*/
+void insert_list(struct List_Node**, int, int);
+
+/*update the dist value for a fringe vertex*/
+void update_list(struct List_Node**, int, int);
+
+/*done by traversing array lineraly*/
+struct List_Node* get_max_fringe(struct List_Node **);
+
 #endif /* LINKED_LIST_H_ */

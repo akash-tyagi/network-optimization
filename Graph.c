@@ -16,7 +16,7 @@ struct Graph* constructGraph() {
 
 	int i = 0;
 	while (i < g->totalVertices) {
-		g->list[i].val = i;
+		g->list[i].vertex = i;
 		g->list[i].weight = INT_MAX; //Todo: check what to keep
 		g->list[i].next = NULL;
 		i++;
@@ -43,8 +43,8 @@ void fillAdjacencyList(struct Graph *graph, int max_degrees) {
 			} while (values[v] != 0);
 			values[v] = 1;
 			struct Node *new = malloc(sizeof(struct Node));
-			new->val = v;
-			new->weight = rand() % 5000;
+			new->vertex = v;
+			new->weight = rand() % MAX_WEIGHT_EDGE;
 			new->next = graph->list[i].next;
 			graph->list[i].next = new;
 		}
@@ -59,8 +59,28 @@ void printGraph(struct Graph *g) {
 		printf("\nFor Vertex:%d Adjacent Nodes Are: ", i);
 		node = g->list[i].next;
 		while (node) {
-			printf("(%d,%d) ", node->val, node->weight);
+			printf("(%d,%d) ", node->vertex, node->weight);
 			node = node->next;
 		}
 	}
 }
+
+/*
+int main(void) {
+	clock_t start = clock();
+	double cpu_time;
+
+	struct Graph *graph = constructGraph();
+	if (graph == NULL) {
+		printf("Memory Allocation Failed");
+		exit(1);
+	}
+
+	fillAdjacencyList(graph, 6);
+	printGraph(graph);
+
+	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
+	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
+	return EXIT_SUCCESS;
+}
+*/

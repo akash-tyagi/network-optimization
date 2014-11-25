@@ -5,14 +5,15 @@
  *      Author: akash
  */
 #include "Source_Header.h"
+#include "Linked_List.h"
 #ifndef GRAPH_H_
 #define GRAPH_H_
 
-#define MAX_VERTICES  10
-#define MAX_WEIGHT_EDGE  5000
+#define MAX_VERTICES  7
+#define MAX_WEIGHT_EDGE  10
 
 struct Node {
-	int val;
+	int vertex;
 	int weight;
 	struct Node* next;
 };

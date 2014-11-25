@@ -18,4 +18,6 @@
 #include<time.h>
 
 #define PRINT(x,y) printf("%d %d \n",x,y);
+#define MIN(x,y) (((x)< (y))?(x):(y))
+#define PRINT_TEXT(x) (printf("%s\n",x));
 #endif /* SOURCE_HEADER_H_ */
