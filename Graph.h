@@ -9,7 +9,7 @@
 #ifndef GRAPH_H_
 #define GRAPH_H_
 
-#define MAX_VERTICES  7
+#define MAX_VERTICES  3
 #define MAX_WEIGHT_EDGE  10
 
 struct Node {

@@ -22,6 +22,9 @@ struct Graph* generate_graph_type_1();
 struct Graph* generate_graph_type_2();
 
 /*Path between a source and target while maintaining the degree limitation*/
-void generate_path(struct Graph*, int, int, int);
+void generate_path(struct Graph*, int, int);
+
+/*Create a link between source vertex and target vertex, maintaining the degree*/
+void link_creation(struct Graph*, int, int);
 
 #endif /* NETWORK_OPTIMIZATION_H_ */

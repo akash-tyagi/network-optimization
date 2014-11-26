@@ -32,3 +32,14 @@ void swap_array_elements(int *arr, int index1, int index2) {
 	arr[index1] = arr[index2];
 	arr[index2] = temp;
 }
+
+//int main() {
+//	initialze_random_array(2,3);
+//	int i=0;
+//	printf("Random Array Size:%d\n",random_array_size);
+//	printf("MAX_VERTICES:%d\n",MAX_VERTICES);
+//	while(i<MAX_VERTICES-2){
+//		printf("%d ",get_random_vertex());
+//		i++;
+//	}
+//}

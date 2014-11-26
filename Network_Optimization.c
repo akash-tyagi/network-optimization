@@ -22,41 +22,36 @@ struct Graph* generate_graph_type_2() {
 	return graph;
 }
 
-void generate_path(struct Graph* graph, int source_vertex, int target_vertex,
-		int degrees) {
+void generate_path(struct Graph* graph, int source_index, int target_index) {
 	printf("...Generating Path...\n");
 	int i, v, j;
 
-//	initialze_random_array(source_vertex, target_vertex);
-//
-//	int random_vertex_index = graph->list[source_vertex].next->vertex;
-//	do {
-//		struct Node* random_vertex = graph->list[random_vertex_index].next;
-//		while (random_vertex && random_vertex->vertex != random_vertex) {
-//			curr_vertex = curr_vertex->next;
-//		}
-//
-//		if (!curr_vertex) {
-//
-//		}
-//	} while ((random_vertex = get_random_vertex()) != -1);
-//
-//	for (i = 0; i < graph->totalVertices; i++) {
-//		int values[graph->totalVertices];
-//		memset(values, 0, graph->totalVertices * sizeof(int));
-//		for (j = 0; j < 6; j++) {
-//			do {
-//				v = rand() % graph->totalVertices;
-//			} while (values[v] != 0);
-//			values[v] = 1;
-//			struct Node *new = malloc(sizeof(struct Node));
-//			new->vertex = v;
-//			new->weight = rand() % MAX_WEIGHT_EDGE;
-//			new->next = graph->list[i].next;
-//			graph->list[i].next = new;
-//		}
-//	}
-//	printf("...Graph Filling Complete\n");
+	initialze_random_array(source_index, target_index);
+
+	int vertex_index = source_index, random_vertex_index;
+	struct Node* child_vertex;
+
+	while ((random_vertex_index = get_random_vertex()) != -1) {
+		link_creation(graph, vertex_index, random_vertex_index);
+		vertex_index = random_vertex_index;
+	}
+	/*Link last random vertex to the target vertex*/
+	link_creation(graph, vertex_index, target_index);
+	printf("...Path Generating Complete\n");
+}
+
+void link_creation(struct Graph* graph, int source_vertex, int target_vertex) {
+	struct Node* child_vertex;
+	/*Searching whether the random index already exists in the children*/
+	child_vertex = graph->list[source_vertex].next;
+	while (child_vertex && child_vertex->vertex != target_vertex) {
+		child_vertex = child_vertex->next;
+	}
+	/*If target vertex not exists in the child then replace one*/
+	if (!child_vertex) {
+		child_vertex = graph->list[source_vertex].next;
+		child_vertex->vertex = target_vertex;
+	}
 }
 
 int main(void) {
