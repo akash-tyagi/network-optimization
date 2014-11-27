@@ -64,8 +64,11 @@ void fillAdjacencyList(struct Graph *graph, int max_degrees) {
 			exit(EXIT_FAILURE);
 		}
 	}
-
+	/*Graph generation using random can sometimes lead to creation of
+	 * unconnected forests. So, my random function get out of options.
+	 * In that case using any random vertex to connect to*/
 	int hack = 0;
+
 	for (i = 0; i < graph->totalVertices; i++) {
 		PRINT_TEXT_VALUE("\nVERTEX:", i);
 		hack = 0;
@@ -76,13 +79,13 @@ void fillAdjacencyList(struct Graph *graph, int max_degrees) {
 					random_vertex = get_random_vertex();
 					if (random_vertex == -1) {
 						hack = 1;
-						break;
+						break;;
 					}
 				} while (i == random_vertex || edges[i][random_vertex] != 0
 						|| graph->list[random_vertex].weight >= max_degrees);
 			}
-			if(hack == 1){
-				PRINT_TEXT("\nHACK HAS KICKED IN");
+			if (hack == 1) {
+//				PRINT_TEXT("\nHACK HAS KICKED IN");
 				do {
 					random_vertex = rand() % MAX_VERTICES;
 				} while (i == random_vertex);

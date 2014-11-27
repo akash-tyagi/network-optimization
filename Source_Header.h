@@ -22,4 +22,6 @@
 #define PRINT_TEXT_VALUE(x,y) printf("%s:%d ",x,y);
 #define MIN(x,y) (((x)< (y))?(x):(y))
 #define PRINT_TEXT(x) (printf("%s\n",x));
+#define TRUE 1
+#define FALSE 0
 #endif /* SOURCE_HEADER_H_ */

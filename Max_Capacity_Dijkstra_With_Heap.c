@@ -1,8 +1,18 @@
-#include "Max_Capacity_Dijkstra_Without_Heap.h"
+/*
+ * Max_Capacity_Dijkstra_With_Heap.c
+ *
+ *  Created on: 26-Nov-2014
+ *      Author: akash
+ */
+#include "Max_Capacity_Dijkstra_With_Heap.h"
 
 void dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
 		int source_vertex, int target_vertex) {
 	PRINT_TEXT("\n...Starting Dijkstra");
+
+	struct Heap *heap = create();
+	//		insert_heap(heap, vertex++, edge_weight);
+
 	struct List_Node *fringe_list = NULL;
 	int *dad = results->dad;
 	int *dist = results->dist;
@@ -18,15 +28,13 @@ void dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
 		status[edges->vertex] = STATUS_FRINGE;
 		dad[edges->vertex] = source_vertex;
 		dist[edges->vertex] = edges->weight;
-		insert_list(&fringe_list, edges->vertex, dist[edges->vertex]);
+		insert_heap(heap, edges->vertex, dist[edges->vertex]);
 		edges = edges->next;
 	}
 
-	struct List_Node * max_fringe_node = NULL;
 	int max_fringe_vertex, edge_vertex;
-	while (fringe_list) {
-		max_fringe_node = get_max_fringe(&fringe_list);
-		max_fringe_vertex = max_fringe_node->vertex;
+	while (is_heap_empty(heap) != TRUE) {
+		max_fringe_vertex = get_min_max(heap);
 		status[max_fringe_vertex] = STATUS_INTREE;
 		edges = graph->list[max_fringe_vertex].next;
 
@@ -36,13 +44,13 @@ void dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
 				status[edge_vertex] = STATUS_FRINGE;
 				dad[edge_vertex] = max_fringe_vertex;
 				dist[edge_vertex] = MIN(dist[max_fringe_vertex], edges->weight);
-				insert_list(&fringe_list, edge_vertex, dist[edge_vertex]);
+				insert_heap(heap, edge_vertex, dist[edge_vertex]);
 			} else if (status[edge_vertex] == STATUS_FRINGE
 					&& dist[edge_vertex]
 							< MIN(dist[max_fringe_vertex], edges->weight)) {
 				dist[edge_vertex] = MIN(dist[max_fringe_vertex], edges->weight);
 				dad[edge_vertex] = max_fringe_vertex;
-				update_list(&fringe_list, edge_vertex, dist[edge_vertex]);
+				update_heap(heap, edge_vertex, dist[edge_vertex]);
 			}
 			edges = edges->next;
 		}
@@ -73,7 +81,7 @@ int main() {
 	struct Graph *graph = generate_graph_type_1();
 
 	//printGraph(graph);
-	generate_path(graph, 0, 1);
+	generate_path(graph, 0, 3479);
 	//printGraph(graph);
 
 	dijsktra(graph, &results, 0, 1);
@@ -83,3 +91,4 @@ int main() {
 	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
 	return EXIT_SUCCESS;
 }
+

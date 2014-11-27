@@ -13,7 +13,7 @@
 
 #define MAX_WEIGHT_EDGE  5000
 
-#define TYPE_1_DEGREE 2
+#define TYPE_1_DEGREE 100
 #define TYPE_2_DEGREE 100
 
 #endif /* NETWORK_PROPERTIES_H_ */

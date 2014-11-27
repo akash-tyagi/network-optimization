@@ -7,7 +7,7 @@ struct Heap* create() {
 		exit(1);
 	}
 	heap->curr_size = 0;
-	heap->max_size = MAX_SIZE;
+	heap->max_size = MAX_VERTICES;
 	heap->A = malloc(sizeof(int) * heap->max_size);
 	heap->D = malloc(sizeof(int) * heap->max_size);
 	if (heap->A == NULL) {
@@ -15,6 +15,12 @@ struct Heap* create() {
 		exit(1);
 	}
 	return heap;
+}
+
+int is_heap_empty(struct Heap *heap) {
+	if (heap->curr_size <= 0)
+		return 1;
+	return -1;
 }
 
 void insert_heap(struct Heap *heap, int vertex, int edge_weight) {
@@ -34,8 +40,23 @@ void insert_heap(struct Heap *heap, int vertex, int edge_weight) {
 		index = parentIndex(index);
 	}
 }
+void update_heap(struct Heap *heap, int vertex, int new_weight) {
+	int i = 0, old_weight = heap->D[heap->A[i]];
+	while (i < heap->curr_size && heap->A[i] != vertex) {
+		i++;
+	}
+	if (i >= heap->curr_size)
+		return;
 
-void heapify(struct Heap *heap, int index) {
+	heap->D[heap->A[i]] = new_weight;
+	if (old_weight < new_weight) {
+		heapify_up(heap, i);
+	} else {
+		heapify_down(heap, i);
+	}
+}
+
+void heapify_down(struct Heap *heap, int index) {
 	if (index >= heap->curr_size)
 		return;
 	int left_index = leftChildIndex(index);
@@ -52,7 +73,15 @@ void heapify(struct Heap *heap, int index) {
 	if (min == index)
 		return;
 	swap_heap_elements(heap, index, min);
-	heapify(heap, min);
+	heapify_down(heap, min);
+}
+
+void heapify_up(struct Heap *heap, int index) {
+	while (parentIndex(index) >= 0
+			&& heap->D[heap->A[parentIndex(index)]] < heap->D[heap->A[index]]) {
+		swap_heap_elements(heap, parentIndex(index), index);
+		index = parentIndex(index);
+	}
 }
 
 void swap_heap_elements(struct Heap *heap, int index1, int index2) {
@@ -70,7 +99,7 @@ int get_min_max(struct Heap *heap) {
 	int min_vertex = heap->A[0];
 	heap->A[0] = heap->A[heap->curr_size - 1];
 	heap->curr_size--;
-	heapify(heap, 0);
+	heapify_down(heap, 0);
 	return min_vertex;
 }
 
@@ -102,23 +131,23 @@ int rightChildIndex(int index) {
 	return 2 * index + 2;
 }
 
-main() {
-	clock_t start = clock();
-	double cpu_time;
-	time_t t;
-	struct Heap *heap = create();
-	srand((unsigned) time(&t));
-
-	int vertex = 0, edge_weight;
-	while (vertex < MAX_SIZE) {
-		edge_weight = rand() % MAX_WEIGHT;
-		PRINT_VALUES(vertex, edge_weight);
-		insert_heap(heap, vertex++, edge_weight);
-	}
-
-	print_sorted_heap(heap);
-
-	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
-	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
-
-}
+//main() {
+//	clock_t start = clock();
+//	double cpu_time;
+//	time_t t;
+//	struct Heap *heap = create();
+//	srand((unsigned) time(&t));
+//
+//	int vertex = 0, edge_weight;
+//	while (vertex < MAX_VERTICES) {
+//		edge_weight = rand() % MAX_WEIGHT_EDGE;
+//		PRINT_VALUES(vertex, edge_weight);
+//		insert_heap(heap, vertex++, edge_weight);
+//	}
+//
+//	print_sorted_heap(heap);
+//
+//	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
+//	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
+//
+//}
