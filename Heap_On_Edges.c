@@ -135,24 +135,24 @@ int rightChildIndex(int index) {
 	return 2 * index + 2;
 }
 
-main() {
-	clock_t start = clock();
-	double cpu_time;
-	time_t t;
-	struct Heap *heap = create();
-	srand((unsigned) time(&t));
-
-	int vertex = 0, edge_weight;
-	while (vertex < MAX_VERTICES) {
-		edge_weight = rand() % MAX_WEIGHT_EDGE;
-		PRINT_VALUES(vertex, edge_weight);
-		insert_heap(heap, vertex++, rand() % 10, edge_weight);
-	}
-	print_heap(heap);
-	print_sorted_heap(heap);
-
-	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
-	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
-
-}
+//main() {
+//	clock_t start = clock();
+//	double cpu_time;
+//	time_t t;
+//	struct Heap *heap = create();
+//	srand((unsigned) time(&t));
+//
+//	int vertex = 0, edge_weight;
+//	while (vertex < MAX_VERTICES) {
+//		edge_weight = rand() % MAX_WEIGHT_EDGE;
+//		PRINT_VALUES(vertex, edge_weight);
+//		insert_heap(heap, vertex++, rand() % 10, edge_weight);
+//	}
+//	print_heap(heap);
+//	print_sorted_heap(heap);
+//
+//	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
+//	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
+//
+//}
 

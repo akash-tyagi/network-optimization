@@ -4,7 +4,7 @@
  *  Created on: 26-Nov-2014
  *      Author: akash
  */
-#include "Max_Capacity_Dijkstra_With_Heap.h"
+#include "Max_Capacity_Dijkstra.h"
 
 void dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
 		int source_vertex, int target_vertex) {

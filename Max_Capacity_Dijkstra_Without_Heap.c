@@ -1,4 +1,4 @@
-#include "Max_Capacity_Dijkstra_Without_Heap.h"
+#include "Max_Capacity_Dijkstra.h"
 
 void dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
 		int source_vertex, int target_vertex) {

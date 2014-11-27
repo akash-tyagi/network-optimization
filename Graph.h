@@ -8,7 +8,6 @@
 #ifndef GRAPH_H_
 #define GRAPH_H_
 
-
 struct Node {
 	int vertex;
 	int weight;
@@ -40,4 +39,5 @@ void generate_path(struct Graph*, int, int);
 
 /*Create a link between source vertex and target vertex, not maintaining the degree*/
 void link_creation(struct Graph*, int, int);
+void link_creation_with_weight(struct Graph*, int, int, int);
 #endif /* GRAPH_H_ */
