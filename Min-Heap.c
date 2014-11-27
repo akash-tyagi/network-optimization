@@ -85,7 +85,7 @@ void print_heap(struct Heap *heap) {
 	printf("\nHeap Structure:\n");
 	int i = 0;
 	while (i < heap->curr_size) {
-		PRINT(heap->A[i], heap->D[heap->A[i]]);
+		PRINT_VALUES(heap->A[i], heap->D[heap->A[i]]);
 		i++;
 	}
 }
@@ -112,7 +112,7 @@ main() {
 	int vertex = 0, edge_weight;
 	while (vertex < MAX_SIZE) {
 		edge_weight = rand() % MAX_WEIGHT;
-		PRINT(vertex, edge_weight);
+		PRINT_VALUES(vertex, edge_weight);
 		insert_heap(heap, vertex++, edge_weight);
 	}
 

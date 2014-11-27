@@ -2,7 +2,7 @@
 
 void dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
 		int source_vertex, int target_vertex) {
-	PRINT_TEXT("...Starting Dijkstra");
+	PRINT_TEXT("\n...Starting Dijkstra");
 	struct List_Node *fringe_list = NULL;
 	int *dad = results->dad;
 	int *dist = results->dist;
@@ -47,6 +47,7 @@ void dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
 			edges = edges->next;
 		}
 	}
+	PRINT_TEXT("\n...Dijkstra Done");
 }
 
 void print_path(struct Dijkstra_Arrays* results, int source_vertex,
@@ -54,11 +55,12 @@ void print_path(struct Dijkstra_Arrays* results, int source_vertex,
 	PRINT_TEXT("..Printing Path..\n");
 	int *dad = results->dad;
 	int *dist = results->dist;
-	printf("Max Capacity Path:%d\n", results->dist[target_vertex]);
+	printf("Max Capacity Path:%d -- ", results->dist[target_vertex]);
 	printf("Path:\n");
 	int vertex = target_vertex;
+	int count = 0;
 	while (vertex != -1) {
-		PRINT(vertex, dist[vertex]);
+		PRINT_VALUES(vertex, dist[vertex]);
 		vertex = dad[vertex];
 	}
 }
@@ -68,12 +70,13 @@ int main() {
 	double cpu_time;
 
 	struct Dijkstra_Arrays results;
-	struct Graph *graph = constructGraph();
-	fillAdjacencyList(graph, 6);
-	printGraph(graph);
+	struct Graph *graph = generate_graph_type_1();
+	//printGraph(graph);
+	generate_path(graph, 0, 1);
+	//printGraph(graph);
 
-	dijsktra(graph, &results, 0, 6);
-	//print_path(&results, 0, 6);
+	dijsktra(graph, &results, 0, 1);
+	print_path(&results, 0, 1);
 
 	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
 	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);

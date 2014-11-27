@@ -17,7 +17,9 @@
 /*included to measure the time taken by the functions*/
 #include<time.h>
 
-#define PRINT(x,y) printf("%d %d \n",x,y);
+#define PRINT_VALUES(x,y) printf("%d %d \n",x,y);
+#define PRINT_VALUE(x) printf("%d ",x);
+#define PRINT_TEXT_VALUE(x,y) printf("%s:%d ",x,y);
 #define MIN(x,y) (((x)< (y))?(x):(y))
 #define PRINT_TEXT(x) (printf("%s\n",x));
 #endif /* SOURCE_HEADER_H_ */
