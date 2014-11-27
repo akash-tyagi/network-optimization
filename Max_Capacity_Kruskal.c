@@ -1,12 +1,16 @@
 #include "Max_Capacity_Kruskal.h"
+
+#ifndef MAX_CAPACITY_KRUSKAL_C_
+#define MAX_CAPACITY_KRUSKAL_C_
+
 void kruskal(struct Graph *graph, int source_vertex, int target_vertex) {
 	int i, count = 0;
-	struct Heap *heap = create();
+	struct Edge_Heap *heap = create_edge_heap();
 	struct Node *node;
 	for (i = 0; i < graph->totalVertices; i++) {
 		node = graph->list[i].next;
 		while (node) {
-			insert_heap(heap, i, node->vertex, node->weight);
+			insert_edge_heap(heap, i, node->vertex, node->weight);
 			node = node->next;
 			count++;
 		}
@@ -19,8 +23,8 @@ void kruskal(struct Graph *graph, int source_vertex, int target_vertex) {
 		vertices[i] = i;
 	count = 0;
 
-	while (is_heap_empty(heap) != TRUE) {
-		struct Edge *edge = get_min_max(heap);
+	while (is_edge_heap_empty(heap) != TRUE) {
+		struct Edge *edge = get_max(heap);
 //		printf("Considering: %d %d ", edge->vertex1, edge->vertex2);
 		int root1 = edge->vertex1, root2 = edge->vertex2;
 		while (vertices[root1] != root1)
@@ -95,20 +99,21 @@ struct BFS_Result* breadth_first_search(struct Graph* graph, int source_vertex,
 	return bfs_result;
 }
 
-int main() {
-	clock_t start = clock();
-	double cpu_time;
-	srand(time(NULL));
-	struct Graph *graph = generate_graph_type_1();
+//int main() {
+//	clock_t start = clock();
+//	double cpu_time;
+//	srand(time(NULL));
+//	struct Graph *graph = generate_graph_type_1();
+//
+////	printGraph(graph);
+//	generate_path(graph, 0, 4);
+////	printGraph(graph);
+//
+//	kruskal(graph, 0, 4);
+//
+//	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
+//	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
+//	return EXIT_SUCCESS;
+//}
 
-//	printGraph(graph);
-	generate_path(graph, 0, 4);
-//	printGraph(graph);
-
-	kruskal(graph, 0, 4);
-
-	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
-	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
-	return EXIT_SUCCESS;
-}
-
+#endif

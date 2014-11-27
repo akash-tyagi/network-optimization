@@ -1,12 +1,16 @@
 /*
- * Heap_On_Edges.c
+ * Edge_Heap_On_Edges.c
  *
  *  Created on: 27-Nov-2014
  *      Author: akash
  */
 #include "Heap_For_Edges.h"
-struct Heap* create() {
-	struct Heap *heap = malloc(sizeof(struct Heap));
+
+#ifndef HEAP_FOR_EDGES_C_
+#define HEAP_FOR_EDGES_C_
+
+struct Edge_Heap* create_edge_heap() {
+	struct Edge_Heap *heap = malloc(sizeof(struct Edge_Heap));
 	if (heap == NULL) {
 		printf("memory allocation failed");
 		exit(1);
@@ -21,17 +25,18 @@ struct Heap* create() {
 	return heap;
 }
 
-int is_heap_empty(struct Heap *heap) {
+int is_edge_heap_empty(struct Edge_Heap *heap) {
 	if (heap->curr_size <= 0)
 		return 1;
 	return -1;
 }
 
-void insert_heap(struct Heap *heap, int vertex1, int vertex2, int edge_weight) {
+void insert_edge_heap(struct Edge_Heap *heap, int vertex1, int vertex2,
+		int edge_weight) {
 	if (heap->curr_size == heap->max_size) {
 		struct Edge *a = malloc(sizeof(struct Edge) * heap->max_size * 2);
 		if (a == NULL) {
-			printf("Heap Insertion Failed: HEAP FULL \n");
+			printf("Edge_Heap Insertion Failed: HEAP FULL \n");
 			exit(1);
 		}
 		memcpy(a, heap->A, heap->max_size * sizeof(struct Edge));
@@ -46,18 +51,18 @@ void insert_heap(struct Heap *heap, int vertex1, int vertex2, int edge_weight) {
 	heap->A[index].vertex2 = vertex2;
 	heap->A[index].weight = edge_weight;
 
-	while (parentIndex(index) >= 0
-			&& heap->A[parentIndex(index)].weight < heap->A[index].weight) {
-		swap_heap_elements(heap, parentIndex(index), index);
-		index = parentIndex(index);
+	while (parent_index(index) >= 0
+			&& heap->A[parent_index(index)].weight < heap->A[index].weight) {
+		swap_edge_heap_elements(heap, parent_index(index), index);
+		index = parent_index(index);
 	}
 }
 
-void heapify_down(struct Heap *heap, int index) {
+void heapify_down_edge_heap(struct Edge_Heap *heap, int index) {
 	if (index >= heap->curr_size)
 		return;
-	int left_index = leftChildIndex(index);
-	int right_index = rightChildIndex(index);
+	int left_index = left_child_index(index);
+	int right_index = right_child_index(index);
 	int min = index;
 	if (left_index < heap->curr_size
 			&& heap->A[min].weight < heap->A[left_index].weight) {
@@ -69,11 +74,11 @@ void heapify_down(struct Heap *heap, int index) {
 	}
 	if (min == index)
 		return;
-	swap_heap_elements(heap, index, min);
-	heapify_down(heap, min);
+	swap_edge_heap_elements(heap, index, min);
+	heapify_down_edge_heap(heap, min);
 }
 
-void swap_heap_elements(struct Heap *heap, int index1, int index2) {
+void swap_edge_heap_elements(struct Edge_Heap *heap, int index1, int index2) {
 	int temp;
 
 	temp = heap->A[index1].vertex1;
@@ -90,9 +95,9 @@ void swap_heap_elements(struct Heap *heap, int index1, int index2) {
 
 }
 
-struct Edge* get_min_max(struct Heap *heap) {
+struct Edge* get_max(struct Edge_Heap *heap) {
 	if (heap == NULL || heap->curr_size <= 0) {
-		printf("Heap Does Not Exist\n");
+		printf("Edge_Heap Does Not Exist\n");
 		return NULL;
 	}
 	struct Edge *min_edge = malloc(sizeof(struct Edge));
@@ -101,21 +106,21 @@ struct Edge* get_min_max(struct Heap *heap) {
 	min_edge->vertex2 = heap->A[0].vertex2;
 	min_edge->weight = heap->A[0].weight;
 
-	swap_heap_elements(heap, 0, heap->curr_size - 1);
+	swap_edge_heap_elements(heap, 0, heap->curr_size - 1);
 	heap->curr_size--;
-	heapify_down(heap, 0);
+	heapify_down_edge_heap(heap, 0);
 	return min_edge;
 }
 
-void print_sorted_heap(struct Heap *heap) {
+void print_sorted_edge_heap(struct Edge_Heap *heap) {
 	while (heap->curr_size > 0) {
-		struct Edge *edge = get_min_max(heap);
+		struct Edge *edge = get_max(heap);
 		printf("%d %d  %d\n", edge->vertex1, edge->vertex2, edge->weight);
 	}
 }
 
-void print_heap(struct Heap *heap) {
-	printf("\nHeap Structure:\n");
+void print_edge_heap(struct Edge_Heap *heap) {
+	printf("\nEdge_Heap Structure:\n");
 	int i = 0;
 	while (i < heap->curr_size) {
 		PRINT_VALUES(heap->A[i].vertex1, heap->A[i].weight);
@@ -123,15 +128,15 @@ void print_heap(struct Heap *heap) {
 	}
 }
 
-int parentIndex(int index) {
+int parent_index(int index) {
 	return (index - 1) / 2;
 }
 
-int leftChildIndex(int index) {
+int left_child_index(int index) {
 	return 2 * index + 1;
 }
 
-int rightChildIndex(int index) {
+int right_child_index(int index) {
 	return 2 * index + 2;
 }
 
@@ -139,20 +144,21 @@ int rightChildIndex(int index) {
 //	clock_t start = clock();
 //	double cpu_time;
 //	time_t t;
-//	struct Heap *heap = create();
+//	struct Edge_Heap *heap = create_edge_heap();
 //	srand((unsigned) time(&t));
 //
 //	int vertex = 0, edge_weight;
 //	while (vertex < MAX_VERTICES) {
 //		edge_weight = rand() % MAX_WEIGHT_EDGE;
 //		PRINT_VALUES(vertex, edge_weight);
-//		insert_heap(heap, vertex++, rand() % 10, edge_weight);
+//		insert_edge_heap(heap, vertex++, rand() % 10, edge_weight);
 //	}
-//	print_heap(heap);
-//	print_sorted_heap(heap);
+//	print_edge_heap(heap);
+//	print_sorted_edge_heap(heap);
 //
 //	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
 //	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
 //
 //}
 
+#endif

@@ -1,9 +1,13 @@
-#include "Graph.h"
 /*
  * Using Adjacency List to represent graph
  * Node : represents the edges in the graph 
  * Graph: stores the pointers to each vertex in the graph
  */
+#include "Graph.h"
+
+#ifndef GRAPH_C_
+#define GRAPH_C_
+
 struct Graph* generate_graph_type_1() {
 	struct Graph *graph = constructGraph();
 	fillAdjacencyList(graph, TYPE_1_DEGREE);
@@ -86,7 +90,7 @@ void fillAdjacencyList(struct Graph *graph, int max_degrees) {
 						is_random_empty = 1;
 						break;
 					}
-				} while (i == random_vertex
+				}while (i == random_vertex
 						|| adjacency_matrix[i][random_vertex] != 0
 						|| graph->list[random_vertex].weight >= max_degrees);
 			}
@@ -94,11 +98,11 @@ void fillAdjacencyList(struct Graph *graph, int max_degrees) {
 //				PRINT_TEXT("\nHACK HAS KICKED IN");
 				do {
 					random_vertex = rand() % MAX_VERTICES;
-				} while (i == random_vertex);
+				}while (i == random_vertex);
 			}
 
 			adjacency_matrix[i][random_vertex] =
-					adjacency_matrix[random_vertex][i] = 1;
+			adjacency_matrix[random_vertex][i] = 1;
 //			PRINT_TEXT_VALUE("Adding Edge", random_vertex);
 
 			/*Create edges for undirected graph, hence two vertices */
@@ -120,7 +124,7 @@ void fillAdjacencyList(struct Graph *graph, int max_degrees) {
 	}
 
 	for (i = 0; i < MAX_VERTICES; i++)
-		free(adjacency_matrix[i]);
+	free(adjacency_matrix[i]);
 	free(adjacency_matrix);
 
 	printf("...Graph Filling Complete\n");
@@ -229,3 +233,5 @@ void printGraph(struct Graph *g) {
 //	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
 //	return EXIT_SUCCESS;
 //}
+
+#endif

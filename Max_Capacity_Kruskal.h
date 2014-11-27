@@ -6,7 +6,7 @@
  */
 
 #include "Graph.c"
-#include "Heap_On_Edges.c"
+#include "Heap_For_Edges.c"
 #include "Queue.c"
 
 #ifndef MAX_CAPACITY_KRUSKAL_H_

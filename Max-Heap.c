@@ -1,5 +1,8 @@
 #include "Heap.h"
 
+#ifndef MAX_HEAP_C_
+#define MAX_HEAP_C_
+
 struct Heap* create() {
 	struct Heap *heap = malloc(sizeof(struct Heap));
 	if (heap == NULL) {
@@ -151,3 +154,5 @@ int rightChildIndex(int index) {
 //	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
 //
 //}
+
+#endif

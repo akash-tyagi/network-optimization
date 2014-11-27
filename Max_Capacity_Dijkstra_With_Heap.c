@@ -6,7 +6,10 @@
  */
 #include "Max_Capacity_Dijkstra.h"
 
-void dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
+#ifndef MAX_CAPACITY_DIJKSTRA_WITH_HEAP_C_
+#define MAX_CAPACITY_DIJKSTRA_WITH_HEAP_C_
+
+void dijsktra_with_heap(struct Graph *graph, struct Dijkstra_Arrays* results,
 		int source_vertex, int target_vertex) {
 	PRINT_TEXT("\n...Starting Dijkstra");
 
@@ -58,7 +61,7 @@ void dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
 	PRINT_TEXT("\n...Dijkstra Done");
 }
 
-void print_path(struct Dijkstra_Arrays* results, int source_vertex,
+void print_path_2(struct Dijkstra_Arrays* results, int source_vertex,
 		int target_vertex) {
 	PRINT_TEXT("..Printing Path..\n");
 	int *dad = results->dad;
@@ -73,22 +76,23 @@ void print_path(struct Dijkstra_Arrays* results, int source_vertex,
 	}
 }
 
-int main() {
-	clock_t start = clock();
-	double cpu_time;
+//int main() {
+//	clock_t start = clock();
+//	double cpu_time;
+//
+//	struct Dijkstra_Arrays results;
+//	struct Graph *graph = generate_graph_type_1();
+//
+//	//printGraph(graph);
+//	generate_path(graph, 0, 3479);
+//	//printGraph(graph);
+//
+//	dijsktra_with_heap(graph, &results, 0, 1);
+//	print_path_2(&results, 0, 1);
+//
+//	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
+//	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
+//	return EXIT_SUCCESS;
+//}
 
-	struct Dijkstra_Arrays results;
-	struct Graph *graph = generate_graph_type_1();
-
-	//printGraph(graph);
-	generate_path(graph, 0, 3479);
-	//printGraph(graph);
-
-	dijsktra(graph, &results, 0, 1);
-	print_path(&results, 0, 1);
-
-	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
-	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
-	return EXIT_SUCCESS;
-}
-
+#endif

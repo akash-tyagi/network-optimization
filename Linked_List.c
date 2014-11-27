@@ -1,5 +1,8 @@
 #include "Linked_List.h"
 
+#ifndef LINKED_LIST_C_
+#define LINKED_LIST_C_
+
 void insert_list(struct List_Node** list, int vertex, int dist) {
 	struct List_Node *new = malloc(sizeof(struct List_Node));
 	new->next = NULL;
@@ -74,3 +77,5 @@ void update_list(struct List_Node** list, int vertex, int dist) {
 //	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
 //	return EXIT_SUCCESS;
 //}
+
+#endif

@@ -5,6 +5,8 @@
  *      Author: akash
  */
 #include "Queue.h"
+#ifndef QUEUE_C_
+#define QUEUE_C_
 
 struct Queue * create_queue(int capacity) {
 	struct Queue *queue = malloc(sizeof(struct Queue));
@@ -62,3 +64,4 @@ void delete_queue(struct Queue* queue) {
 		free(queue);
 	}
 }
+#endif

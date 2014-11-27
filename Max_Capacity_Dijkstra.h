@@ -6,8 +6,9 @@
  */
 #include "Graph.c"
 #include "Max-Heap.c"
-#ifndef MAX_CAPACITY_DIJKSTRA_WITH_HEAP_H_
-#define MAX_CAPACITY_DIJKSTRA_WITH_HEAP_H_
+#include "Linked_List.c"
+#ifndef MAX_CAPACITY_DIJKSTRA_H_
+#define MAX_CAPACITY_DIJKSTRA_H_
 
 struct Dijkstra_Arrays {
 	int dad[MAX_VERTICES];
@@ -17,4 +18,7 @@ struct Dijkstra_Arrays {
 void dijsktra(struct Graph*, struct Dijkstra_Arrays*, int, int);
 void print_path(struct Dijkstra_Arrays*, int, int);
 
-#endif /* MAX_CAPACITY_DIJKSTRA_WITH_HEAP_H_ */
+void dijsktra_with_heap(struct Graph*, struct Dijkstra_Arrays*, int, int);
+void print_path_2(struct Dijkstra_Arrays*, int, int);
+
+#endif /* MAX_CAPACITY_DIJKSTRA_H_ */

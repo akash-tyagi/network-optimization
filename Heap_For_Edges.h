@@ -1,5 +1,5 @@
 /*
- * Heap_On_Edges.h
+ * Heap_For_Edges.h
  *
  *  Created on: 27-Nov-2014
  *      Author: akash
@@ -7,31 +7,32 @@
 #include "Source_Header.h"
 #include "Network_Properties.h"
 
-#ifndef HEAP_ON_EDGES_H_
-#define HEAP_ON_EDGES_H_
+#ifndef HEAP_FOR_EDGES_H_
+#define HEAP_FOR_EDGES_H_
 
 struct Edge {
 	int vertex1, vertex2, weight;
 };
 
-struct Heap {
+struct Edge_Heap {
 	struct Edge *A; // store the vertices
 	int curr_size;
 	int max_size;
 };
 
-struct Heap* create();
-int parentIndex(int index);
+int parent_index(int index);
+int left_child_index(int index);
+int right_child_index(int index);
 
-int leftChildIndex(int);
-int rightChildIndex(int);
-void insert_heap(struct Heap *heap, int, int, int);
+struct Edge_Heap* create_edge_heap();
+void insert_edge_heap(struct Edge_Heap *heap, int, int, int);
 
 /*get min-max depending on heap implementation*/
-struct Edge* get_min_max(struct Heap *heap);
+struct Edge* get_max(struct Edge_Heap *heap);
 
-void swap_heap_elements(struct Heap *, int, int);
-void print_sorted_heap(struct Heap *);
-int is_heap_empty(struct Heap *);
-
-#endif /* HEAP_ON_EDGES_H_ */
+void swap_edge_heap_elements(struct Edge_Heap *, int, int);
+void print_sorted_edge_heap(struct Edge_Heap *);
+int is_edge_heap_empty(struct Edge_Heap *);
+void heapify_down_edge_heap(struct Edge_Heap *, int);
+void print_edge_heap(struct Edge_Heap *);
+#endif /* HEAP_FOR_EDGES_H_ */
