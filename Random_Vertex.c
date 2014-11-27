@@ -14,9 +14,6 @@ void initialze_random_array(int source_vertex, int target_vertex) {
 	swap_array_elements(random_array, target_vertex, MAX_VERTICES - 2);
 	random_array_size = MAX_VERTICES - 2;
 
-	PRINT_TEXT_VALUE("INIT:", random_array_size);
-	for (i = 0; i < random_array_size; i++)
-		PRINT_VALUE(random_array[i])
 }
 
 void initialze_random_array2(int source_vertex) {
@@ -34,7 +31,7 @@ void initialze_random_array2(int source_vertex) {
 
 int get_random_vertex() {
 	if (random_array_size <= 0) {
-		PRINT_TEXT("\nRANDOM ARRAY EMPTY\n");
+//		PRINT_TEXT("\nRANDOM ARRAY EMPTY\n");
 		return -1;
 	}
 	time_t t;

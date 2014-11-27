@@ -65,17 +65,28 @@ void fillAdjacencyList(struct Graph *graph, int max_degrees) {
 		}
 	}
 
+	int hack = 0;
 	for (i = 0; i < graph->totalVertices; i++) {
 		PRINT_TEXT_VALUE("\nVERTEX:", i);
+		hack = 0;
 		initialze_random_array2(i);
 		while (graph->list[i].weight < max_degrees) {
-			do {
-				random_vertex = get_random_vertex();
-				if (random_vertex == -1) {
+			if (hack == 0) {
+				do {
+					random_vertex = get_random_vertex();
+					if (random_vertex == -1) {
+						hack = 1;
+						break;
+					}
+				} while (i == random_vertex || edges[i][random_vertex] != 0
+						|| graph->list[random_vertex].weight >= max_degrees);
+			}
+			if(hack == 1){
+				PRINT_TEXT("\nHACK HAS KICKED IN");
+				do {
 					random_vertex = rand() % MAX_VERTICES;
-				}
-			} while (i == random_vertex || edges[i][random_vertex] != 0
-					|| graph->list[random_vertex].weight >= max_degrees);
+				} while (i == random_vertex);
+			}
 			edges[i][random_vertex] = edges[random_vertex][i] = 1;
 //			PRINT_TEXT_VALUE("Adding Edge", random_vertex);
 			int weight = rand() % MAX_WEIGHT_EDGE;
