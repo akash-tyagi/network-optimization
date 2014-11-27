@@ -1,8 +1,9 @@
 #include "Linked_List.h"
+
 void insert_list(struct List_Node** list, int vertex, int dist) {
 	struct List_Node *new = malloc(sizeof(struct List_Node));
 	new->next = NULL;
-	new->dist = dist;
+	new->weight = dist;
 	new->vertex = vertex;
 	if (*list) {
 		new->next = *list;
@@ -16,11 +17,11 @@ struct List_Node* get_max_fringe(struct List_Node **list) {
 
 	struct List_Node *prev, *prev_max, *curr, *max;
 	prev_max = NULL, max = *list;
-
 	prev = *list;
 	curr = (*list)->next;
+
 	while (curr) {
-		if (curr->dist > max->dist) {
+		if (curr->weight > max->weight) {
 			prev_max = prev;
 			max = curr;
 		}
@@ -49,7 +50,7 @@ void update_list(struct List_Node** list, int vertex, int dist) {
 		curr = curr->next;
 
 	if (curr && curr->vertex == vertex)
-		curr->dist = dist;
+		curr->weight = dist;
 }
 
 //main() {
@@ -66,7 +67,7 @@ void update_list(struct List_Node** list, int vertex, int dist) {
 //	printf("INSERTION");
 //	while (list) {
 //		struct List_Node * temp = get_max_fringe(&list);
-//		PRINT(temp->vertex, temp->dist);
+//		PRINT_VALUES(temp->vertex, temp->weight)
 //	}
 //
 //	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;

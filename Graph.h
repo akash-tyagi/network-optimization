@@ -5,6 +5,7 @@
  *      Author: akash
  */
 #include "Random_Vertex.c"
+
 #ifndef GRAPH_H_
 #define GRAPH_H_
 
@@ -22,10 +23,10 @@ struct Graph {
 /*each vertex with degree 6*/
 struct Graph* generate_graph_type_1();
 
-/*each vertex with edges about 20% of other vertices*/
+/*each vertex with edges about 20% of other vertices =  1000*/
 struct Graph* generate_graph_type_2();
 
-/*Initializing Graph with total vertices count*/
+/*Initializing Graph*/
 struct Graph* constructGraph();
 
 /*Randomly assigns certain edges to each vertex*/
@@ -39,5 +40,10 @@ void generate_path(struct Graph*, int, int);
 
 /*Create a link between source vertex and target vertex, not maintaining the degree*/
 void link_creation(struct Graph*, int, int);
+
+/*Create a link of provided weight between source vertex and target vertex, not maintaining the degree*/
 void link_creation_with_weight(struct Graph*, int, int, int);
+
+/*Return an empty adjacency matrix for graph*/
+int** allocate_adjacency_matrix();
 #endif /* GRAPH_H_ */

@@ -1,6 +1,6 @@
 /*
  * Source_header.h
- *
+ * Keeps the important libraries, Print functions, Constants
  *  Created on: 23-Nov-2014
  *      Author: akash
  */
@@ -17,11 +17,15 @@
 /*included to measure the time taken by the functions*/
 #include<time.h>
 
+/*pretty handy when comes to debugging*/
 #define PRINT_VALUES(x,y) printf("%d %d \n",x,y);
 #define PRINT_VALUE(x) printf("%d ",x);
 #define PRINT_TEXT_VALUE(x,y) printf("%s:%d ",x,y);
 #define MIN(x,y) (((x)< (y))?(x):(y))
 #define PRINT_TEXT(x) (printf("%s\n",x));
+
+/*Java style constants*/
 #define TRUE 1
 #define FALSE 0
+
 #endif /* SOURCE_HEADER_H_ */

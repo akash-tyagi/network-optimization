@@ -4,7 +4,7 @@
  *  Created on: 27-Nov-2014
  *      Author: akash
  */
-#include "Heap_On_Edges.h"
+#include "Heap_For_Edges.h"
 struct Heap* create() {
 	struct Heap *heap = malloc(sizeof(struct Heap));
 	if (heap == NULL) {
