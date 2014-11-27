@@ -78,7 +78,9 @@ void fillAdjacencyList(struct Graph *graph, int max_degrees) {
 	int is_random_empty = 0;
 
 	for (i = 0; i < graph->totalVertices; i++) {
-		PRINT_TEXT_VALUE("\nVERTEX:", i);
+		if (i % 1000 == 0) {
+			PRINT_TEXT_VALUE("ON VERTEX:", i);
+		}
 		is_random_empty = 0;
 		initialze_random_array2(i);
 		while (graph->list[i].weight < max_degrees) {
@@ -90,7 +92,7 @@ void fillAdjacencyList(struct Graph *graph, int max_degrees) {
 						is_random_empty = 1;
 						break;
 					}
-				}while (i == random_vertex
+				} while (i == random_vertex
 						|| adjacency_matrix[i][random_vertex] != 0
 						|| graph->list[random_vertex].weight >= max_degrees);
 			}
@@ -98,11 +100,11 @@ void fillAdjacencyList(struct Graph *graph, int max_degrees) {
 //				PRINT_TEXT("\nHACK HAS KICKED IN");
 				do {
 					random_vertex = rand() % MAX_VERTICES;
-				}while (i == random_vertex);
+				} while (i == random_vertex);
 			}
 
 			adjacency_matrix[i][random_vertex] =
-			adjacency_matrix[random_vertex][i] = 1;
+					adjacency_matrix[random_vertex][i] = 1;
 //			PRINT_TEXT_VALUE("Adding Edge", random_vertex);
 
 			/*Create edges for undirected graph, hence two vertices */
@@ -124,10 +126,10 @@ void fillAdjacencyList(struct Graph *graph, int max_degrees) {
 	}
 
 	for (i = 0; i < MAX_VERTICES; i++)
-	free(adjacency_matrix[i]);
+		free(adjacency_matrix[i]);
 	free(adjacency_matrix);
 
-	printf("...Graph Filling Complete\n");
+	PRINT_TEXT("...Graph Filling Complete");
 }
 
 void generate_path(struct Graph* graph, int source_index, int target_index) {
@@ -215,7 +217,7 @@ void printGraph(struct Graph *g) {
 		}
 	}
 }
-//
+
 //int main(void) {
 //	clock_t start = clock();
 //	double cpu_time;

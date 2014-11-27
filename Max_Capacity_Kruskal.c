@@ -3,7 +3,12 @@
 #ifndef MAX_CAPACITY_KRUSKAL_C_
 #define MAX_CAPACITY_KRUSKAL_C_
 
-void kruskal(struct Graph *graph, int source_vertex, int target_vertex) {
+double kruskal(struct Graph *graph, int source_vertex, int target_vertex) {
+	PRINT_TEXT("_________________________________________________");
+	PRINT_TEXT("...STARTING KRUSKAL...");
+	clock_t start = clock();
+	double cpu_time;
+
 	int i, count = 0;
 	struct Edge_Heap *heap = create_edge_heap();
 	struct Node *node;
@@ -15,7 +20,8 @@ void kruskal(struct Graph *graph, int source_vertex, int target_vertex) {
 			count++;
 		}
 	}
-	PRINT_TEXT_VALUE("\nTOTAL:", count);
+	PRINT_TEXT("HEAP INSERTIONS DONE");
+//	PRINT_TEXT_VALUE("\nTOTAL:", count);
 
 	struct Graph *new_graph = constructGraph();
 	int vertices[MAX_VERTICES];
@@ -50,18 +56,24 @@ void kruskal(struct Graph *graph, int source_vertex, int target_vertex) {
 	}
 
 	PRINT_TEXT_VALUE("TOTAL EDGES ADDED:", count);
-	printGraph(new_graph);
+//	printGraph(new_graph);
 
 	struct BFS_Result* bfs_result = breadth_first_search(new_graph,
 			source_vertex, target_vertex);
 
 	int vertex = target_vertex;
-	PRINT_TEXT_VALUE("PRINTING PATH:", vertex);
+//	PRINT_TEXT_VALUE("PRINTING PATH:", vertex);
 	while (bfs_result->path[vertex] != vertex) {
-		PRINT_VALUE(bfs_result->path[vertex]);
+//		PRINT_VALUE(bfs_result->path[vertex]);
 		vertex = bfs_result->path[vertex];
 	}
-	PRINT_TEXT_VALUE("\nMAX_CAPACITY PATH:", bfs_result->max_capacity);
+	PRINT_TEXT_VALUE("MAX_CAPACITY PATH:", bfs_result->max_capacity);
+
+	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
+	printf("Total Time Taken: %f\n", cpu_time);
+	PRINT_TEXT("...KRUSKAL DONE...");
+	PRINT_TEXT("_________________________________________________");
+	return cpu_time;
 }
 
 struct BFS_Result* breadth_first_search(struct Graph* graph, int source_vertex,
@@ -99,21 +111,21 @@ struct BFS_Result* breadth_first_search(struct Graph* graph, int source_vertex,
 	return bfs_result;
 }
 
-//int main() {
-//	clock_t start = clock();
-//	double cpu_time;
-//	srand(time(NULL));
-//	struct Graph *graph = generate_graph_type_1();
-//
-////	printGraph(graph);
-//	generate_path(graph, 0, 4);
-////	printGraph(graph);
-//
-//	kruskal(graph, 0, 4);
-//
-//	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
-//	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
-//	return EXIT_SUCCESS;
-//}
+int main() {
+	clock_t start = clock();
+	double cpu_time;
+	srand(time(NULL));
+	struct Graph *graph = generate_graph_type_2();
+
+//	printGraph(graph);
+	generate_path(graph, 0, 4);
+//	printGraph(graph);
+
+	kruskal(graph, 0, 4);
+
+	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
+	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
+	return EXIT_SUCCESS;
+}
 
 #endif

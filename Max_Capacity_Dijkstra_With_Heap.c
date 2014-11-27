@@ -9,10 +9,12 @@
 #ifndef MAX_CAPACITY_DIJKSTRA_WITH_HEAP_C_
 #define MAX_CAPACITY_DIJKSTRA_WITH_HEAP_C_
 
-void dijsktra_with_heap(struct Graph *graph, struct Dijkstra_Arrays* results,
+double dijsktra_with_heap(struct Graph *graph, struct Dijkstra_Arrays* results,
 		int source_vertex, int target_vertex) {
-	PRINT_TEXT("\n...Starting Dijkstra");
-
+	PRINT_TEXT("_________________________________________________");
+	PRINT_TEXT("...Starting Dijkstra");
+	clock_t start = clock();
+	double cpu_time;
 	struct Heap *heap = create();
 	//		insert_heap(heap, vertex++, edge_weight);
 
@@ -58,7 +60,11 @@ void dijsktra_with_heap(struct Graph *graph, struct Dijkstra_Arrays* results,
 			edges = edges->next;
 		}
 	}
-	PRINT_TEXT("\n...Dijkstra Done");
+	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
+	printf("Total Time Taken: %f\n", cpu_time);
+	PRINT_TEXT("...Dijkstra With Heap Done...");
+	PRINT_TEXT("_________________________________________________");
+	return cpu_time;
 }
 
 void print_path_2(struct Dijkstra_Arrays* results, int source_vertex,
@@ -76,23 +82,23 @@ void print_path_2(struct Dijkstra_Arrays* results, int source_vertex,
 	}
 }
 
-//int main() {
-//	clock_t start = clock();
-//	double cpu_time;
-//
-//	struct Dijkstra_Arrays results;
-//	struct Graph *graph = generate_graph_type_1();
-//
-//	//printGraph(graph);
-//	generate_path(graph, 0, 3479);
-//	//printGraph(graph);
-//
-//	dijsktra_with_heap(graph, &results, 0, 1);
+int main() {
+	clock_t start = clock();
+	double cpu_time;
+
+	struct Dijkstra_Arrays results;
+	struct Graph *graph = generate_graph_type_1();
+
+	//printGraph(graph);
+	generate_path(graph, 0, 3479);
+	//printGraph(graph);
+
+	dijsktra_with_heap(graph, &results, 0, 1);
 //	print_path_2(&results, 0, 1);
-//
-//	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
-//	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
-//	return EXIT_SUCCESS;
-//}
+
+	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
+	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
+	return EXIT_SUCCESS;
+}
 
 #endif

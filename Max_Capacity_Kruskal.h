@@ -16,6 +16,6 @@ struct BFS_Result {
 	int *path, max_capacity;
 };
 
-void kruskal(struct Graph *, int, int);
+double kruskal(struct Graph *, int, int);
 struct BFS_Result* breadth_first_search(struct Graph*, int, int);
 #endif /* MAX_CAPACITY_KRUSKAL_H_ */

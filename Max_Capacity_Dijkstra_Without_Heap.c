@@ -1,11 +1,15 @@
 #include "Max_Capacity_Dijkstra.h"
 
-#ifndef MAX_CAPACITY_DIJKSTRA_WITHOUT_HEAP_H_
-#define MAX_CAPACITY_DIJKSTRA_WITHOUT_HEAP_H_
+#ifndef MAX_CAPACITY_DIJKSTRA_WITHOUT_HEAP_C_
+#define MAX_CAPACITY_DIJKSTRA_WITHOUT_HEAP_C_
 
-void dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
+double dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
 		int source_vertex, int target_vertex) {
-	PRINT_TEXT("\n...Starting Dijkstra");
+	PRINT_TEXT("_________________________________________________");
+	PRINT_TEXT("...Starting Dijkstra...");
+	clock_t start = clock();
+	double cpu_time;
+
 	struct List_Node *fringe_list = NULL;
 	int *dad = results->dad;
 	int *dist = results->dist;
@@ -50,7 +54,12 @@ void dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
 			edges = edges->next;
 		}
 	}
-	PRINT_TEXT("\n...Dijkstra Done");
+
+	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
+	printf("Total Time Taken: %f\n", cpu_time);
+	PRINT_TEXT("...Dijkstra Done...");
+	PRINT_TEXT("_________________________________________________");
+	return cpu_time;
 }
 
 void print_path(struct Dijkstra_Arrays* results, int source_vertex,
@@ -68,23 +77,23 @@ void print_path(struct Dijkstra_Arrays* results, int source_vertex,
 	}
 }
 
-//int main() {
-//	clock_t start = clock();
-//	double cpu_time;
-//
-//	struct Dijkstra_Arrays results;
-//	struct Graph *graph = generate_graph_type_1();
-//
-//	//printGraph(graph);
-//	generate_path(graph, 0, 1);
-//	//printGraph(graph);
-//
-//	dijsktra(graph, &results, 0, 1);
+int main() {
+	clock_t start = clock();
+	double cpu_time;
+
+	struct Dijkstra_Arrays results;
+	struct Graph *graph = generate_graph_type_1();
+
+	//printGraph(graph);
+	generate_path(graph, 0, 1);
+	//printGraph(graph);
+
+	dijsktra(graph, &results, 0, 1);
 //	print_path(&results, 0, 1);
-//
-//	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
-//	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
-//	return EXIT_SUCCESS;
-//}
+
+	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
+	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
+	return EXIT_SUCCESS;
+}
 
 #endif

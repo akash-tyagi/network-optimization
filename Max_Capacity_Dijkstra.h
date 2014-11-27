@@ -15,10 +15,10 @@ struct Dijkstra_Arrays {
 	int dist[MAX_VERTICES];
 };
 
-void dijsktra(struct Graph*, struct Dijkstra_Arrays*, int, int);
+double dijsktra(struct Graph*, struct Dijkstra_Arrays*, int, int);
 void print_path(struct Dijkstra_Arrays*, int, int);
 
-void dijsktra_with_heap(struct Graph*, struct Dijkstra_Arrays*, int, int);
+double dijsktra_with_heap(struct Graph*, struct Dijkstra_Arrays*, int, int);
 void print_path_2(struct Dijkstra_Arrays*, int, int);
 
 #endif /* MAX_CAPACITY_DIJKSTRA_H_ */
