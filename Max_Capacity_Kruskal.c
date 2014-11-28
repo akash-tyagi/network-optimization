@@ -8,41 +8,74 @@ double kruskal(struct Graph *graph, int source_vertex, int target_vertex) {
 	PRINT_TEXT("...STARTING KRUSKAL...");
 	clock_t start = clock();
 	double cpu_time;
-
+	int **adjacency_matrix = allocate_adjacency_matrix();
 	int i, count = 0;
+
 	struct Edge_Heap *heap = create_edge_heap();
-	struct Node *node;
+	struct Node *node, *node2;
 	for (i = 0; i < graph->totalVertices; i++) {
 		node = graph->list[i].next;
 		while (node) {
-			insert_edge_heap(heap, i, node->vertex, node->weight);
+			if (adjacency_matrix[i][node->vertex] >= 0) {
+				adjacency_matrix[node->vertex][i] = -1;
+				insert_edge_heap(heap, i, node->vertex, node->weight);
+				count++;
+			}
 			node = node->next;
-			count++;
 		}
 	}
+
 	PRINT_TEXT("HEAP INSERTIONS DONE");
-//	PRINT_TEXT_VALUE("\nTOTAL:", count);
+	PRINT_TEXT_VALUE("TOTAL:", count);
 
 	struct Graph *new_graph = constructGraph();
-	int vertices[MAX_VERTICES];
-	for (i = 0; i < MAX_VERTICES; i++)
-		vertices[i] = i;
+	int dad[MAX_VERTICES];
+	int rank[MAX_VERTICES];
+
+	for (i = 0; i < MAX_VERTICES; i++) {
+		dad[i] = i;
+		rank[i] = 0;
+	}
+
 	count = 0;
 
 	while (is_edge_heap_empty(heap) != TRUE) {
 		struct Edge *edge = get_max(heap);
 //		printf("Considering: %d %d ", edge->vertex1, edge->vertex2);
-		int root1 = edge->vertex1, root2 = edge->vertex2;
-		while (vertices[root1] != root1)
-			root1 = vertices[root1];
-		while (vertices[root2] != root2)
-			root2 = vertices[root2];
+		int root1 = edge->vertex1, root2 = edge->vertex2, temp1, temp2;
+		int rank1 = rank[edge->vertex1], rank2 = rank[edge->vertex2];
+
+		while (dad[root1] != root1)
+			root1 = dad[root1];
+		temp1 = edge->vertex1;
+		while (dad[temp1] != root1) {
+			temp2 = dad[temp1];
+			dad[temp1] = root1;
+			temp1 = temp2;
+		}
+
+		while (dad[root2] != root2)
+			root2 = dad[root2];
+		temp1 = edge->vertex2;
+		while (dad[temp1] != root2) {
+			temp2 = dad[temp1];
+			dad[temp1] = root2;
+			temp1 = temp2;
+		}
+
 //		PRINT_VALUES(root1, root2);
 		//set operations
 		if (root1 == root2) {
 			continue;
 		} else {
-			vertices[root2] = root1;
+			if (rank1 > rank2) {
+				dad[root2] = root1;
+			} else {
+				dad[root1] = root2;
+			}
+			if (rank1 == rank2) {
+				rank[root2]++;
+			}
 		}
 		count++;
 		link_creation_with_weight(new_graph, edge->vertex1, edge->vertex2,
@@ -50,12 +83,12 @@ double kruskal(struct Graph *graph, int source_vertex, int target_vertex) {
 		link_creation_with_weight(new_graph, edge->vertex2, edge->vertex1,
 				edge->weight);
 //		for (i = 0; i < MAX_VERTICES; i++) {
-//			PRINT_VALUE(vertices[i])
+//			PRINT_VALUE(dad[i])
 //		}
 //		PRINT_TEXT("ADDED");
 	}
 
-	PRINT_TEXT_VALUE("TOTAL EDGES ADDED:", count);
+//	PRINT_TEXT_VALUE("TOTAL EDGES ADDED:", count);
 //	printGraph(new_graph);
 
 	struct BFS_Result* bfs_result = breadth_first_search(new_graph,
@@ -73,6 +106,11 @@ double kruskal(struct Graph *graph, int source_vertex, int target_vertex) {
 	printf("Total Time Taken: %f\n", cpu_time);
 	PRINT_TEXT("...KRUSKAL DONE...");
 	PRINT_TEXT("_________________________________________________");
+
+	for (i = 0; i < MAX_VERTICES; i++)
+		free(adjacency_matrix[i]);
+	free(adjacency_matrix);
+
 	return cpu_time;
 }
 
@@ -115,7 +153,7 @@ int main() {
 	clock_t start = clock();
 	double cpu_time;
 	srand(time(NULL));
-	struct Graph *graph = generate_graph_type_2();
+	struct Graph *graph = generate_graph_type_1();
 
 //	printGraph(graph);
 	generate_path(graph, 0, 4);

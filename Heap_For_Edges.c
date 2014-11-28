@@ -41,6 +41,7 @@ void insert_edge_heap(struct Edge_Heap *heap, int vertex1, int vertex2,
 		}
 		memcpy(a, heap->A, heap->max_size * sizeof(struct Edge));
 		heap->max_size = 2 * heap->max_size;
+		PRINT_TEXT_VALUE("INCREASING SIZE TO:",heap->max_size)
 		heap->A = a;
 	}
 
