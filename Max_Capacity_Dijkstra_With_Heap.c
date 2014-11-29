@@ -77,10 +77,10 @@ void print_max_capacity_path_dijkstra_2(struct Dijkstra_Arrays* results,
 //	printf("Path:\n");
 	int vertex = target_vertex;
 	int count = 0;
-//	while (vertex != -1) {
-//		PRINT_VALUES(vertex, dist[vertex]);
-//		vertex = dad[vertex];
-//	}
+	while (vertex != -1) {
+		PRINT_VALUES(vertex, dist[vertex]);
+		vertex = dad[vertex];
+	}
 }
 
 //int main() {

@@ -52,11 +52,11 @@ void insert_edge_heap(struct Edge_Heap *heap, int vertex1, int vertex2,
 	heap->A[index].vertex2 = vertex2;
 	heap->A[index].weight = edge_weight;
 
-	while (parent_index(index) >= 0
-			&& heap->A[parent_index(index)].weight < heap->A[index].weight) {
-		swap_edge_heap_elements(heap, parent_index(index), index);
-		index = parent_index(index);
-	}
+//	while (parent_index(index) >= 0
+//			&& heap->A[parent_index(index)].weight < heap->A[index].weight) {
+//		swap_edge_heap_elements(heap, parent_index(index), index);
+//		index = parent_index(index);
+//	}
 }
 
 void heapify_down_edge_heap(struct Edge_Heap *heap, int index) {
@@ -111,6 +111,21 @@ struct Edge* get_max(struct Edge_Heap *heap) {
 	heap->curr_size--;
 	heapify_down_edge_heap(heap, 0);
 	return min_edge;
+}
+
+void heapsort(struct Edge_Heap *heap) {
+	PRINT_TEXT("...STARTING HEAPSORT")
+	int i;
+	for (i = heap->curr_size / 2; i >= 0; i--) {
+		heapify_down_edge_heap(heap, i);
+	}
+
+	for (i = heap->curr_size - 1; i >= 1; i--) {
+		heap->curr_size--;
+		swap_edge_heap_elements(heap, 0, heap->curr_size);
+		heapify_down_edge_heap(heap, i);
+	}
+	PRINT_TEXT("...HEAPSORT END")
 }
 
 void print_sorted_edge_heap(struct Edge_Heap *heap) {

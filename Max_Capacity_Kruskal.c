@@ -25,16 +25,19 @@ double kruskal(struct Graph *graph, int source_vertex, int target_vertex) {
 			node = node->next;
 		}
 	}
-
+	int size = heap->curr_size;
+	heapsort(heap);
 //	PRINT_TEXT("HEAP INSERTIONS DONE");
 //	PRINT_TEXT_VALUE("TOTAL:", count);
 
 	struct Graph *new_graph = construct_graph();
 	struct Set_Arrays *set_data = make_set();
 	count = 0;
-
-	while (is_edge_heap_empty(heap) != TRUE) {
-		struct Edge *edge = get_max(heap);
+	i = 0;
+	while (i < size) {
+		struct Edge *edge = &heap->A[i++];
+//	while (is_edge_heap_empty(heap) != TRUE) {
+//		struct Edge *edge = get_max(heap);
 //		printf("Considering: %d %d %d\n", edge->vertex1, edge->vertex2,
 //				edge->weight);
 //		PRINT_VALUES(set_data->dad[edge->vertex1], set_data->dad[edge->vertex2])
@@ -75,11 +78,11 @@ void print_max_capacity_path_krukskal(struct Graph* graph, int source_vertex,
 			target_vertex);
 
 	int vertex = target_vertex;
-//	PRINT_TEXT_VALUE("PRINTING PATH:", vertex);
-//	while (bfs_result->path[vertex] != vertex) {
-//		PRINT_VALUE(bfs_result->path[vertex]);
-//		vertex = bfs_result->path[vertex];
-//	}
+	PRINT_TEXT_VALUE("PRINTING PATH:", vertex);
+	while (bfs_result->path[vertex][0] != vertex) {
+		PRINT_VALUES(bfs_result->path[vertex][0], bfs_result->path[vertex][1]);
+		vertex = bfs_result->path[vertex][0];
+	}
 	PRINT_TEXT_VALUE("MAX_CAPACITY PATH:", bfs_result->max_capacity);
 }
 
