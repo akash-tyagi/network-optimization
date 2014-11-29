@@ -14,7 +14,7 @@
 #define MAX_CAPACITY_KRUSKAL_H_
 
 struct BFS_Result {
-	int *path, max_capacity;
+	int **path, max_capacity;
 };
 
 double kruskal(struct Graph *, int, int);

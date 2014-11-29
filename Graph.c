@@ -48,15 +48,15 @@ struct Graph* constructGraph() {
 	return graph;
 }
 
-int** allocate_adjacency_matrix() {
+int** allocate_2D_matrix(int rows, int cols) {
 	int i;
-	int **adjacency_matrix = (int **) malloc(MAX_VERTICES * sizeof(int *));
+	int **adjacency_matrix = (int **) malloc(rows * sizeof(int *));
 	if (adjacency_matrix == NULL) {
 		PRINT_TEXT("ADJACENCY FILLING FAILED!!");
 		exit(EXIT_FAILURE);
 	}
 	for (i = 0; i < MAX_VERTICES; i++) {
-		adjacency_matrix[i] = malloc(MAX_VERTICES * sizeof(int));
+		adjacency_matrix[i] = malloc(cols * sizeof(int));
 		if (adjacency_matrix[i] == NULL) {
 			PRINT_TEXT("ADJACENCY FILLING FAILED!!");
 			exit(EXIT_FAILURE);
@@ -70,7 +70,7 @@ void fillAdjacencyList(struct Graph *graph, int max_degrees) {
 	int i, random_vertex, j;
 
 	/*Used to avoid multiple edges between same vertices*/
-	int **adjacency_matrix = allocate_adjacency_matrix();
+	int **adjacency_matrix = allocate_2D_matrix(MAX_VERTICES, MAX_VERTICES);
 
 	/*Graph generation using random can sometimes lead to creation of
 	 * forests. So, when my random function get out of options,

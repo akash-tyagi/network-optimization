@@ -54,7 +54,7 @@ double dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
 			edges = edges->next;
 		}
 	}
-
+	print_max_capacity_path_dijkstra(results, source_vertex,target_vertex);
 	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
 	printf("Total Time Taken: %f\n", cpu_time);
 	PRINT_TEXT("...Dijkstra Done...");
@@ -77,23 +77,23 @@ void print_max_capacity_path_dijkstra(struct Dijkstra_Arrays* results, int sourc
 	}
 }
 
-int main() {
-	clock_t start = clock();
-	double cpu_time;
-
-	struct Dijkstra_Arrays results;
-	struct Graph *graph = generate_graph_type_1();
-
-	//printGraph(graph);
-	generate_path(graph, 0, 1);
-	printGraph(graph);
-
-	dijsktra(graph, &results, 0, 1);
-	print_max_capacity_path_dijkstra(&results, 0, 1);
-
-	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
-	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
-	return EXIT_SUCCESS;
-}
+//int main() {
+//	clock_t start = clock();
+//	double cpu_time;
+//
+//	struct Dijkstra_Arrays results;
+//	struct Graph *graph = generate_graph_type_1();
+//
+//	//printGraph(graph);
+//	generate_path(graph, 0, 1);
+//	printGraph(graph);
+//
+//	dijsktra(graph, &results, 0, 1);
+//	print_max_capacity_path_dijkstra(&results, 0, 1);
+//
+//	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
+//	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
+//	return EXIT_SUCCESS;
+//}
 
 #endif

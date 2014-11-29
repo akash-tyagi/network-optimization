@@ -45,5 +45,5 @@ void link_creation(struct Graph*, int, int);
 void link_creation_with_weight(struct Graph*, int, int, int);
 
 /*Return an empty adjacency matrix for graph*/
-int** allocate_adjacency_matrix();
+int** allocate_2D_matrix(int,int);
 #endif /* GRAPH_H_ */
