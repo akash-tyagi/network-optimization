@@ -73,7 +73,7 @@ int main() {
 
 //	printGraph(graph);
 	generate_path(graph, 0, 1);
-	printGraph(graph);
+	print_graph(graph);
 
 	struct Dijkstra_Arrays results;
 	dijsktra(graph, &results, 0, 1);
@@ -81,7 +81,7 @@ int main() {
 	struct Dijkstra_Arrays results2;
 	dijsktra_with_heap(graph, &results2, 0, 1);
 
-	kruskal(graph, 0, 1);
+//	kruskal(graph, 0, 1);
 
 	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
 	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);

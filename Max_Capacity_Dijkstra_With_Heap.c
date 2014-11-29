@@ -12,17 +12,17 @@
 double dijsktra_with_heap(struct Graph *graph, struct Dijkstra_Arrays* results,
 		int source_vertex, int target_vertex) {
 	PRINT_TEXT("_________________________________________________");
-	PRINT_TEXT("...Starting Dijkstra");
+	PRINT_TEXT("...Starting Dijkstra With Heap...");
 	clock_t start = clock();
 	double cpu_time;
 	struct Heap *heap = create();
-	//		insert_heap(heap, vertex++, edge_weight);
-
 	struct List_Node *fringe_list = NULL;
+	int status[MAX_VERTICES];
+	memset(results->dad, 0, MAX_VERTICES * sizeof(int));
+	memset(results->dist, 0, MAX_VERTICES * sizeof(int));
+	memset(status, 0, MAX_VERTICES * sizeof(int));
 	int *dad = results->dad;
 	int *dist = results->dist;
-	int status[MAX_VERTICES];
-	memset(status, 0, MAX_VERTICES);
 
 	status[source_vertex] = STATUS_INTREE;
 	dad[source_vertex] = -1;
@@ -70,17 +70,17 @@ double dijsktra_with_heap(struct Graph *graph, struct Dijkstra_Arrays* results,
 
 void print_max_capacity_path_dijkstra_2(struct Dijkstra_Arrays* results,
 		int source_vertex, int target_vertex) {
-	PRINT_TEXT("..Printing Path..\n");
+//	PRINT_TEXT("..Printing Path..");
 	int *dad = results->dad;
 	int *dist = results->dist;
-	printf("Max Capacity Path:%d -- ", results->dist[target_vertex]);
-	printf("Path:\n");
+	PRINT_TEXT_VALUE("Max Capacity Path:", results->dist[target_vertex])
+//	printf("Path:\n");
 	int vertex = target_vertex;
 	int count = 0;
-	while (vertex != -1) {
-		PRINT_VALUES(vertex, dist[vertex]);
-		vertex = dad[vertex];
-	}
+//	while (vertex != -1) {
+//		PRINT_VALUES(vertex, dist[vertex]);
+//		vertex = dad[vertex];
+//	}
 }
 
 //int main() {

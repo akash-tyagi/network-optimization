@@ -27,13 +27,13 @@ struct Graph* generate_graph_type_1();
 struct Graph* generate_graph_type_2();
 
 /*Initializing Graph*/
-struct Graph* constructGraph();
+struct Graph* construct_graph();
 
 /*Randomly assigns certain edges to each vertex*/
-void fillAdjacencyList(struct Graph *graph, int max_degrees);
+void fill_adjacency_list(struct Graph *graph, int max_degrees);
 
 /*print all the edges for each vertex*/
-void printGraph(struct Graph *g);
+void print_graph(struct Graph *g);
 
 /*Path between a source and target, not maintaining the degree limitation*/
 void generate_path(struct Graph*, int, int);
@@ -45,5 +45,8 @@ void link_creation(struct Graph*, int, int);
 void link_creation_with_weight(struct Graph*, int, int, int);
 
 /*Return an empty adjacency matrix for graph*/
-int** allocate_2D_matrix(int,int);
+int** allocate_2D_matrix(int, int);
+
+/*Get a random vertex using random vertex function*/
+int get_vertex(struct Graph *, int *, int **, int, int);
 #endif /* GRAPH_H_ */

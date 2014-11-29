@@ -28,19 +28,21 @@ int find_by_rank(struct Set_Arrays *arrays, int vertex) {
 }
 
 int union_by_rank(struct Set_Arrays *arrays, int vertex1, int vertex2) {
-	int rank1 = find_by_rank(arrays, vertex1);
-	int rank2 = find_by_rank(arrays, vertex2);
+	int dad1 = find_by_rank(arrays, vertex1);
+	int dad2 = find_by_rank(arrays, vertex2);
+	int rank1 = arrays->rank[dad1];
+	int rank2 = arrays->rank[dad2];
 
-	if (arrays->dad[vertex1] == arrays->dad[vertex2]) {
+	if (dad1 == dad2) {
 		return FALSE;
 	} else {
 		if (rank1 > rank2) {
-			arrays->dad[vertex2] = arrays->dad[vertex1];
+			arrays->dad[dad2] = arrays->dad[dad1];
 		} else {
-			arrays->dad[vertex1] = arrays->dad[vertex2];
+			arrays->dad[dad1] = arrays->dad[dad2];
 		}
 		if (rank1 == rank2) {
-			arrays->rank[vertex2]++;
+			arrays->rank[dad2]++;
 		}
 	}
 	return TRUE;

@@ -39,38 +39,41 @@ struct Network_Result* calculate_performacnce() {
 			vertex1 = rand() % MAX_VERTICES;
 			do {
 				vertex2 = rand() % MAX_VERTICES;
-			} while (vertex1 != vertex2);
+			} while (vertex1 == vertex2);
 			generate_path(graph1, vertex1, vertex2);
 			generate_path(graph2, vertex1, vertex2);
-
-			results[count].graph_type = 1;
-			results[count].time_by_dijkstra = test_dijkstra_without_heap(graph1,
-					vertex1, vertex2);
-			results[count].time_by_dijkstra_with_heap = test_dijkstra_with_heap(
-					graph1, vertex1, vertex2);
-			results[count].time_by_kruskal = test_kruskal(graph1, vertex1,
+			PRINT_VALUES(vertex1, vertex2)
+			print_graph(graph1);
+			generate_results(results, count++, GRAPH_TYPE_1, graph1, vertex1,
 					vertex2);
-			count++;
-
-			results[count].graph_type = 2;
-			results[count].time_by_dijkstra = test_dijkstra_without_heap(graph2,
-					vertex1, vertex2);
-			results[count].time_by_dijkstra_with_heap = test_dijkstra_with_heap(
-					graph2, vertex1, vertex2);
-			results[count].time_by_kruskal = test_kruskal(graph2, vertex1,
+			print_graph(graph2);
+			generate_results(results, count++, GRAPH_TYPE_2, graph2, vertex1,
 					vertex2);
-			count++;
+
+			total_vertex_pairs++;
 		}
 	}
 	return results;
+}
+
+void generate_results(struct Network_Result *results, int index, int graph_type,
+		struct Graph *graph, int source_vertex, int target_vertex) {
+	results[index].graph_type = graph_type;
+	results[index].time_by_dijkstra = test_dijkstra_without_heap(graph,
+			source_vertex, target_vertex);
+	results[index].time_by_dijkstra_with_heap = test_dijkstra_with_heap(graph,
+			source_vertex, target_vertex);
+	results[index].time_by_kruskal = test_kruskal(graph, source_vertex,
+			target_vertex);
 }
 
 int main() {
 	struct Network_Result *results = calculate_performacnce();
 	FILE* file = fopen("results.txt", "w");
 	int i = 0;
+	fprintf(file, "Graph type\tDijkstra\tDijkstra-with-heap\t\tkruskal\n");
 	while (i < TOTAL_RESULTS) {
-		fprintf(file, "%d,%f,%f,%f\n", results[i].graph_type,
+		fprintf(file, "%d\t\t\t%f\t\t\t%f\t\t%f\n", results[i].graph_type,
 				results[i].time_by_dijkstra,
 				results[i].time_by_dijkstra_with_heap,
 				results[i].time_by_kruskal);

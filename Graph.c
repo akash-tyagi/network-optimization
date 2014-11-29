@@ -9,19 +9,19 @@
 #define GRAPH_C_
 
 struct Graph* generate_graph_type_1() {
-	struct Graph *graph = constructGraph();
-	fillAdjacencyList(graph, TYPE_1_DEGREE);
+	struct Graph *graph = construct_graph();
+	fill_adjacency_list(graph, TYPE_1_DEGREE);
 	return graph;
 }
 
 struct Graph* generate_graph_type_2() {
-	struct Graph *graph = constructGraph();
-	fillAdjacencyList(graph, TYPE_2_DEGREE);
+	struct Graph *graph = construct_graph();
+	fill_adjacency_list(graph, TYPE_2_DEGREE);
 	return graph;
 }
 
-struct Graph* constructGraph() {
-	printf("...Constructing Graph...\n");
+struct Graph* construct_graph() {
+//	printf("...Constructing Graph...\n");
 	int i = 0;
 	struct Graph *graph = malloc(sizeof(struct Graph));
 	if (graph == NULL) {
@@ -44,7 +44,7 @@ struct Graph* constructGraph() {
 		i++;
 	}
 
-	printf("...Graph Construction Done...\n");
+//	printf("...Graph Construction Done...\n");
 	return graph;
 }
 
@@ -65,7 +65,39 @@ int** allocate_2D_matrix(int rows, int cols) {
 	return adjacency_matrix;
 }
 
-void fillAdjacencyList(struct Graph *graph, int max_degrees) {
+int get_vertex(struct Graph *graph, int *is_random_empty,
+		int **adjacency_matrix, int max_degrees, int vertex) {
+	int random_vertex;
+	if (*is_random_empty == 0) {
+		do {
+			random_vertex = get_random_vertex();
+			/*Random generator out of options*/
+			if (random_vertex == -1) {
+				*is_random_empty = 1;
+				break;
+			}
+		} while (vertex == random_vertex
+				|| adjacency_matrix[vertex][random_vertex] != 0
+				|| graph->list[random_vertex].weight >= max_degrees);
+	} else {
+		random_vertex = -1;
+	}
+//	if (*is_random_empty == 1) {
+//		PRINT_TEXT("\nHACK HAS KICKED IN");
+//		do {
+//			random_vertex = rand() % MAX_VERTICES;
+//			PRINT_VALUE(random_vertex)
+//			while (random_vertex < MAX_VERTICES - 1
+//					&& adjacency_matrix[vertex][random_vertex] != 0) {
+//				random_vertex++;
+//			}
+//		} while (vertex == random_vertex
+//				|| adjacency_matrix[vertex][random_vertex] != 0);
+//	}
+	return random_vertex;
+}
+
+void fill_adjacency_list(struct Graph *graph, int max_degrees) {
 	printf("...Filling List...\n");
 	int i, random_vertex, j;
 
@@ -83,32 +115,19 @@ void fillAdjacencyList(struct Graph *graph, int max_degrees) {
 		}
 		is_random_empty = 0;
 		initialze_random_array2(i);
-		while (graph->list[i].weight < max_degrees) {
-			if (is_random_empty == 0) {
-				do {
-					random_vertex = get_random_vertex();
-					/*Random generator out of options*/
-					if (random_vertex == -1) {
-						is_random_empty = 1;
-						break;
-					}
-				} while (i == random_vertex
-						|| adjacency_matrix[i][random_vertex] != 0
-						|| graph->list[random_vertex].weight >= max_degrees);
-			}
-			if (is_random_empty == 1) {
-//				PRINT_TEXT("\nHACK HAS KICKED IN");
-				do {
-					random_vertex = rand() % MAX_VERTICES;
-				} while (i == random_vertex);
-			}
-
+		j = graph->list[i].weight;
+		while (j < max_degrees) {
+			j++;
+			random_vertex = get_vertex(graph, &is_random_empty,
+					adjacency_matrix, max_degrees, i);
+			if (random_vertex == -1)
+				continue;
 			adjacency_matrix[i][random_vertex] =
 					adjacency_matrix[random_vertex][i] = 1;
 //			PRINT_TEXT_VALUE("Adding Edge", random_vertex);
 
 			/*Create edges for undirected graph, hence two vertices */
-			int weight = rand() % MAX_WEIGHT_EDGE;
+			int weight = rand() % MAX_WEIGHT_EDGE + 1;
 			struct Node *new = malloc(sizeof(struct Node));
 			new->vertex = random_vertex;
 			new->weight = weight;
@@ -129,11 +148,11 @@ void fillAdjacencyList(struct Graph *graph, int max_degrees) {
 		free(adjacency_matrix[i]);
 	free(adjacency_matrix);
 
-	PRINT_TEXT("...Graph Filling Complete");
+//	PRINT_TEXT("...Graph Filling Complete");
 }
 
 void generate_path(struct Graph* graph, int source_index, int target_index) {
-	printf("...Generating Path...\n");
+//	printf("...Generating Path...\n");
 //	PRINT_VALUE(source_index);
 	int i, v, j;
 
@@ -147,7 +166,7 @@ void generate_path(struct Graph* graph, int source_index, int target_index) {
 
 	/*Link last random vertex to the target vertex*/
 	link_creation(graph, vertex_index, target_index);
-	printf("...Path Generating Complete\n");
+//	printf("...Path Generating Complete\n");
 }
 
 void link_creation(struct Graph* graph, int source_index, int target_index) {
@@ -162,7 +181,7 @@ void link_creation(struct Graph* graph, int source_index, int target_index) {
 
 	/*If target vertex not exists in the child create new edge*/
 	if (!child_vertex) {
-		int weight = rand() % MAX_WEIGHT_EDGE;
+		int weight = rand() % MAX_WEIGHT_EDGE + 1;
 		struct Node *new = malloc(sizeof(struct Node));
 		new->vertex = target_index;
 		new->weight = weight;
@@ -204,7 +223,7 @@ void link_creation_with_weight(struct Graph* graph, int source_index,
 	}
 }
 
-void printGraph(struct Graph *g) {
+void print_graph(struct Graph *g) {
 	int i;
 	struct Node *adjacent_vertex;
 	for (i = 0; i < g->totalVertices; i++) {

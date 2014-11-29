@@ -16,7 +16,8 @@ double kruskal(struct Graph *graph, int source_vertex, int target_vertex) {
 	for (i = 0; i < graph->totalVertices; i++) {
 		node = graph->list[i].next;
 		while (node) {
-			if (adjacency_matrix[i][node->vertex] >= 0) {
+			if (adjacency_matrix[i][node->vertex] == 0) {
+				adjacency_matrix[i][node->vertex] = 1;
 				adjacency_matrix[node->vertex][i] = -1;
 				insert_edge_heap(heap, i, node->vertex, node->weight);
 				count++;
@@ -28,13 +29,15 @@ double kruskal(struct Graph *graph, int source_vertex, int target_vertex) {
 //	PRINT_TEXT("HEAP INSERTIONS DONE");
 //	PRINT_TEXT_VALUE("TOTAL:", count);
 
-	struct Graph *new_graph = constructGraph();
+	struct Graph *new_graph = construct_graph();
 	struct Set_Arrays *set_data = make_set();
 	count = 0;
 
 	while (is_edge_heap_empty(heap) != TRUE) {
 		struct Edge *edge = get_max(heap);
-//		printf("Considering: %d %d ", edge->vertex1, edge->vertex2);
+//		printf("Considering: %d %d %d\n", edge->vertex1, edge->vertex2,
+//				edge->weight);
+//		PRINT_VALUES(set_data->dad[edge->vertex1], set_data->dad[edge->vertex2])
 		if (union_by_rank(set_data, edge->vertex1, edge->vertex2)) {
 			count++;
 			link_creation_with_weight(new_graph, edge->vertex1, edge->vertex2,
@@ -121,7 +124,7 @@ struct BFS_Result* breadth_first_search(struct Graph* graph, int source_vertex,
 	while (path[i][0] != -2) {
 		if (path[i][1] < max_capacity)
 			max_capacity = path[i][1];
-		PRINT_VALUES(i, path[i][1]);
+//		PRINT_VALUES(i, path[i][1]);
 		i = path[i][0];
 
 	}

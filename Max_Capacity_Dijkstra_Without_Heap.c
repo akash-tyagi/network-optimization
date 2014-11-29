@@ -14,7 +14,7 @@ double dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
 	int *dad = results->dad;
 	int *dist = results->dist;
 	int status[MAX_VERTICES];
-	memset(status, 0, MAX_VERTICES);
+	memset(status, 0, MAX_VERTICES * sizeof(int));
 
 	status[source_vertex] = STATUS_INTREE;
 	dad[source_vertex] = -1;
@@ -54,7 +54,7 @@ double dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
 			edges = edges->next;
 		}
 	}
-	print_max_capacity_path_dijkstra(results, source_vertex,target_vertex);
+	print_max_capacity_path_dijkstra(results, source_vertex, target_vertex);
 	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
 	printf("Total Time Taken: %f\n", cpu_time);
 	PRINT_TEXT("...Dijkstra Done...");
@@ -62,19 +62,19 @@ double dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
 	return cpu_time;
 }
 
-void print_max_capacity_path_dijkstra(struct Dijkstra_Arrays* results, int source_vertex,
-		int target_vertex) {
-	PRINT_TEXT("..Printing Path..\n");
+void print_max_capacity_path_dijkstra(struct Dijkstra_Arrays* results,
+		int source_vertex, int target_vertex) {
+//	PRINT_TEXT("..Printing Path..");
 	int *dad = results->dad;
 	int *dist = results->dist;
-	printf("Max Capacity Path:%d -- ", results->dist[target_vertex]);
-	printf("Path:\n");
+	PRINT_TEXT_VALUE("Max Capacity Path:", results->dist[target_vertex]);
+//	printf("Path:\n");
 	int vertex = target_vertex;
 	int count = 0;
-	while (vertex != -1) {
-		PRINT_VALUES(vertex, dist[vertex]);
-		vertex = dad[vertex];
-	}
+//	while (vertex != -1) {
+//		PRINT_VALUES(vertex, dist[vertex]);
+//		vertex = dad[vertex];
+//	}
 }
 
 //int main() {
@@ -84,9 +84,9 @@ void print_max_capacity_path_dijkstra(struct Dijkstra_Arrays* results, int sourc
 //	struct Dijkstra_Arrays results;
 //	struct Graph *graph = generate_graph_type_1();
 //
-//	//printGraph(graph);
+////printGraph(graph);
 //	generate_path(graph, 0, 1);
-//	printGraph(graph);
+//	print_graph(graph);
 //
 //	dijsktra(graph, &results, 0, 1);
 //	print_max_capacity_path_dijkstra(&results, 0, 1);
