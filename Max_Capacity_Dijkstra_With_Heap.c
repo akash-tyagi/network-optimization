@@ -67,7 +67,7 @@ double dijsktra_with_heap(struct Graph *graph, struct Dijkstra_Arrays* results,
 	return cpu_time;
 }
 
-void print_path_2(struct Dijkstra_Arrays* results, int source_vertex,
+void print_max_capacity_path_dijkstra(struct Dijkstra_Arrays* results, int source_vertex,
 		int target_vertex) {
 	PRINT_TEXT("..Printing Path..\n");
 	int *dad = results->dad;
@@ -90,11 +90,11 @@ int main() {
 	struct Graph *graph = generate_graph_type_1();
 
 	//printGraph(graph);
-	generate_path(graph, 0, 3479);
-	//printGraph(graph);
+	generate_path(graph, 0, 1);
+	printGraph(graph);
 
 	dijsktra_with_heap(graph, &results, 0, 1);
-//	print_path_2(&results, 0, 1);
+	print_max_capacity_path_dijkstra(&results, 0, 1);
 
 	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
 	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);

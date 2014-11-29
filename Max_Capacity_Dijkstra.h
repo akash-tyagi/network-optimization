@@ -16,9 +16,8 @@ struct Dijkstra_Arrays {
 };
 
 double dijsktra(struct Graph*, struct Dijkstra_Arrays*, int, int);
-void print_path(struct Dijkstra_Arrays*, int, int);
+void print_max_capacity_path_dijkstra(struct Dijkstra_Arrays*, int, int);
 
 double dijsktra_with_heap(struct Graph*, struct Dijkstra_Arrays*, int, int);
-void print_path_2(struct Dijkstra_Arrays*, int, int);
 
 #endif /* MAX_CAPACITY_DIJKSTRA_H_ */
