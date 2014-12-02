@@ -32,13 +32,13 @@ struct Graph* construct_graph() {
 	graph->totalVertices = MAX_VERTICES;
 	graph->list = malloc(sizeof(struct Node) * graph->totalVertices);
 	if (graph->list == NULL) {
-		PRINT_TEXT("GRAPH ALLOCATION FAILED!!");
+		PRINT_TEXT("GRAPH VERTICES ALLOCATION FAILED!!");
 		exit(EXIT_FAILURE);
 	}
 
 	while (i < graph->totalVertices) {
 		graph->list[i].vertex = i;
-		/*weight in the source vertex is used as edge count*/
+		/*this particular weight is used as edge count for this vertex*/
 		graph->list[i].weight = 0;
 		graph->list[i].next = NULL;
 		i++;
@@ -50,19 +50,20 @@ struct Graph* construct_graph() {
 
 int** allocate_2D_matrix(int rows, int cols) {
 	int i;
-	int **adjacency_matrix = (int **) malloc(rows * sizeof(int *));
-	if (adjacency_matrix == NULL) {
-		PRINT_TEXT("ADJACENCY FILLING FAILED!!");
+	int **matrix = (int **) malloc(rows * sizeof(int *));
+	if (matrix == NULL) {
+		PRINT_TEXT("2D MATRIX MEMORY ALLOCATION FAILED!!");
 		exit(EXIT_FAILURE);
 	}
-	for (i = 0; i < MAX_VERTICES; i++) {
-		adjacency_matrix[i] = malloc(cols * sizeof(int));
-		if (adjacency_matrix[i] == NULL) {
-			PRINT_TEXT("ADJACENCY FILLING FAILED!!");
+	for (i = 0; i < rows; i++) {
+		matrix[i] = malloc(cols * sizeof(int));
+		memset(matrix[i], 0, cols * sizeof(int));
+		if (matrix[i] == NULL) {
+			PRINT_TEXT("2D MATRIX MEMORY ALLOCATION FAILED!!");
 			exit(EXIT_FAILURE);
 		}
 	}
-	return adjacency_matrix;
+	return matrix;
 }
 
 int get_vertex(struct Graph *graph, int *is_random_empty,
@@ -82,48 +83,36 @@ int get_vertex(struct Graph *graph, int *is_random_empty,
 	} else {
 		random_vertex = -1;
 	}
-//	if (*is_random_empty == 1) {
-//		PRINT_TEXT("\nHACK HAS KICKED IN");
-//		do {
-//			random_vertex = rand() % MAX_VERTICES;
-//			PRINT_VALUE(random_vertex)
-//			while (random_vertex < MAX_VERTICES - 1
-//					&& adjacency_matrix[vertex][random_vertex] != 0) {
-//				random_vertex++;
-//			}
-//		} while (vertex == random_vertex
-//				|| adjacency_matrix[vertex][random_vertex] != 0);
-//	}
 	return random_vertex;
 }
 
 void fill_adjacency_list(struct Graph *graph, int max_degrees) {
 	printf("...Filling List...\n");
-	int i, random_vertex, j;
 
-	/*Used to avoid multiple edges between same vertices*/
+	/*Use to avoid multiple edges generation between same vertices*/
 	int **adjacency_matrix = allocate_2D_matrix(MAX_VERTICES, MAX_VERTICES);
+	int vertex, random_vertex, j;
 
-	/*Graph generation using random can sometimes lead to creation of
+	/*Edge generation using leads to creation of
 	 * forests. So, when my random function get out of options,
 	 * traditional random function is used */
 	int is_random_empty = 0;
 
-	for (i = 0; i < graph->totalVertices; i++) {
-		if (i % 1000 == 0) {
-			PRINT_TEXT_VALUE("ON VERTEX:", i);
+	for (vertex = 0; vertex < graph->totalVertices; vertex++) {
+		if (vertex % 1000 == 0) {
+			PRINT_TEXT_VALUE("ON VERTEX:", vertex);
 		}
 		is_random_empty = 0;
-		initialze_random_array2(i);
-		j = graph->list[i].weight;
+		initialze_random_array2(vertex);
+		j = graph->list[vertex].weight;
 		while (j < max_degrees) {
 			j++;
 			random_vertex = get_vertex(graph, &is_random_empty,
-					adjacency_matrix, max_degrees, i);
+					adjacency_matrix, max_degrees, vertex);
 			if (random_vertex == -1)
 				continue;
-			adjacency_matrix[i][random_vertex] =
-					adjacency_matrix[random_vertex][i] = 1;
+			adjacency_matrix[vertex][random_vertex] =
+					adjacency_matrix[random_vertex][vertex] = 1;
 //			PRINT_TEXT_VALUE("Adding Edge", random_vertex);
 
 			/*Create edges for undirected graph, hence two vertices */
@@ -131,12 +120,12 @@ void fill_adjacency_list(struct Graph *graph, int max_degrees) {
 			struct Node *new = malloc(sizeof(struct Node));
 			new->vertex = random_vertex;
 			new->weight = weight;
-			new->next = graph->list[i].next;
-			graph->list[i].next = new;
-			graph->list[i].weight++;
+			new->next = graph->list[vertex].next;
+			graph->list[vertex].next = new;
+			graph->list[vertex].weight++;
 
 			new = malloc(sizeof(struct Node));
-			new->vertex = i;
+			new->vertex = vertex;
 			new->weight = weight;
 			new->next = graph->list[random_vertex].next;
 			graph->list[random_vertex].next = new;
@@ -144,16 +133,15 @@ void fill_adjacency_list(struct Graph *graph, int max_degrees) {
 		}
 	}
 
-	for (i = 0; i < MAX_VERTICES; i++)
-		free(adjacency_matrix[i]);
+	for (j = 0; j < MAX_VERTICES; j++)
+		free(adjacency_matrix[j]);
 	free(adjacency_matrix);
 
 //	PRINT_TEXT("...Graph Filling Complete");
 }
 
 void generate_path(struct Graph* graph, int source_index, int target_index) {
-//	printf("...Generating Path...\n");
-//	PRINT_VALUE(source_index);
+	printf("...Generating Path...\n");
 	int i, v, j;
 
 	initialze_random_array(source_index, target_index);
@@ -166,7 +154,6 @@ void generate_path(struct Graph* graph, int source_index, int target_index) {
 
 	/*Link last random vertex to the target vertex*/
 	link_creation(graph, vertex_index, target_index);
-//	printf("...Path Generating Complete\n");
 }
 
 void link_creation(struct Graph* graph, int source_index, int target_index) {

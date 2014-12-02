@@ -32,6 +32,7 @@ struct List_Node* get_max_fringe(struct List_Node **list) {
 		curr = curr->next;
 	}
 
+	//not the first node in the fringe list
 	if (prev_max) {
 		prev_max->next = max->next;
 	} else {

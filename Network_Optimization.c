@@ -42,11 +42,11 @@ struct Network_Result* calculate_performacnce() {
 			} while (vertex1 == vertex2);
 			generate_path(graph1, vertex1, vertex2);
 			generate_path(graph2, vertex1, vertex2);
-			PRINT_VALUES(vertex1, vertex2)
-			print_graph(graph1);
+//			PRINT_VALUES(vertex1, vertex2)
+//			print_graph(graph1);
 			generate_results(results, count++, GRAPH_TYPE_1, graph1, vertex1,
 					vertex2);
-			print_graph(graph2);
+//			print_graph(graph2);
 			generate_results(results, count++, GRAPH_TYPE_2, graph2, vertex1,
 					vertex2);
 

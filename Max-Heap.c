@@ -44,13 +44,14 @@ void insert_heap(struct Heap *heap, int vertex, int edge_weight) {
 	}
 }
 void update_heap(struct Heap *heap, int vertex, int new_weight) {
-	int i = 0, old_weight = heap->D[heap->A[i]];
+	int i = 0;
 	while (i < heap->curr_size && heap->A[i] != vertex) {
 		i++;
 	}
 	if (i >= heap->curr_size)
 		return;
 
+	int old_weight = heap->D[heap->A[i]];
 	heap->D[heap->A[i]] = new_weight;
 	if (old_weight < new_weight) {
 		heapify_up(heap, i);
@@ -99,17 +100,25 @@ int get_min_max(struct Heap *heap) {
 		printf("Heap Does Not Exist\n");
 		return -1;
 	}
-	int min_vertex = heap->A[0];
+	int max_vertex = heap->A[0];
 	heap->A[0] = heap->A[heap->curr_size - 1];
 	heap->curr_size--;
 	heapify_down(heap, 0);
-	return min_vertex;
+	return max_vertex;
 }
 
 void print_sorted_heap(struct Heap *heap) {
+	int isorderd = TRUE, prev = INT_MAX;
 	while (heap->curr_size > 0) {
 		int index = get_min_max(heap);
+		if (heap->D[index] > prev) {
+			isorderd = FALSE;
+		}
+		prev = heap->D[index];
 		printf("%d %d | ", index, heap->D[index]);
+	}
+	if (isorderd == FALSE) {
+		PRINT_TEXT("WRONG ORDER")
 	}
 }
 
@@ -147,6 +156,8 @@ int rightChildIndex(int index) {
 //		PRINT_VALUES(vertex, edge_weight);
 //		insert_heap(heap, vertex++, edge_weight);
 //	}
+//
+//	update_heap(heap, 2, -1);
 //
 //	print_sorted_heap(heap);
 //

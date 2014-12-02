@@ -16,6 +16,7 @@ double kruskal(struct Graph *graph, int source_vertex, int target_vertex) {
 	for (i = 0; i < graph->totalVertices; i++) {
 		node = graph->list[i].next;
 		while (node) {
+			/*Used to avoid the duplicate addition of edges in the heap*/
 			if (adjacency_matrix[i][node->vertex] == 0) {
 				adjacency_matrix[i][node->vertex] = 1;
 				adjacency_matrix[node->vertex][i] = -1;
@@ -33,9 +34,9 @@ double kruskal(struct Graph *graph, int source_vertex, int target_vertex) {
 	struct Graph *new_graph = construct_graph();
 	struct Set_Arrays *set_data = make_set();
 	count = 0;
-	i = 0;
-	while (i < size) {
-		struct Edge *edge = &heap->A[i++];
+	i = heap->curr_size - 1;
+	while (i >= 0) {
+		struct Edge *edge = &heap->A[i--];
 //	while (is_edge_heap_empty(heap) != TRUE) {
 //		struct Edge *edge = get_max(heap);
 //		printf("Considering: %d %d %d\n", edge->vertex1, edge->vertex2,
@@ -78,12 +79,13 @@ void print_max_capacity_path_krukskal(struct Graph* graph, int source_vertex,
 			target_vertex);
 
 	int vertex = target_vertex;
-	PRINT_TEXT_VALUE("PRINTING PATH:", vertex);
-	while (bfs_result->path[vertex][0] != vertex) {
-		PRINT_VALUES(bfs_result->path[vertex][0], bfs_result->path[vertex][1]);
-		vertex = bfs_result->path[vertex][0];
-	}
 	PRINT_TEXT_VALUE("MAX_CAPACITY PATH:", bfs_result->max_capacity);
+	PRINT_TEXT_VALUE("PRINTING PATH:", vertex);
+//	while (bfs_result->path[vertex][0] != -2) {
+//		PRINT_VALUES(bfs_result->path[vertex][0], bfs_result->path[vertex][1]);
+//		vertex = bfs_result->path[vertex][0];
+//	}
+
 }
 
 struct BFS_Result* breadth_first_search(struct Graph* graph, int source_vertex,

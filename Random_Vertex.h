@@ -1,6 +1,6 @@
 /*
  * Random_Vertex.h
- * Generated numbers uniformly from a list of numbers.
+ * Generate numbers uniformly from a 0 to  MAX_VERTICES -1.
  *  Created on: 25-Nov-2014
  *      Author: akash
  */

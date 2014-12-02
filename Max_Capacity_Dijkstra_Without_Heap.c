@@ -15,6 +15,8 @@ double dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
 	int *dist = results->dist;
 	int status[MAX_VERTICES];
 	memset(status, 0, MAX_VERTICES * sizeof(int));
+	memset(dad, -1, MAX_VERTICES * sizeof(int));
+	memset(dist, 0, MAX_VERTICES * sizeof(int));
 
 	status[source_vertex] = STATUS_INTREE;
 	dad[source_vertex] = -1;
@@ -32,8 +34,7 @@ double dijsktra(struct Graph *graph, struct Dijkstra_Arrays* results,
 	struct List_Node * max_fringe_node = NULL;
 	int max_fringe_vertex, edge_vertex;
 	while (fringe_list) {
-		max_fringe_node = get_max_fringe(&fringe_list);
-		max_fringe_vertex = max_fringe_node->vertex;
+		max_fringe_vertex = get_max_fringe(&fringe_list)->vertex;
 		status[max_fringe_vertex] = STATUS_INTREE;
 		edges = graph->list[max_fringe_vertex].next;
 
@@ -69,12 +70,12 @@ void print_max_capacity_path_dijkstra(struct Dijkstra_Arrays* results,
 	int *dist = results->dist;
 	PRINT_TEXT_VALUE("Max Capacity Path:", results->dist[target_vertex]);
 //	printf("Path:\n");
-	int vertex = target_vertex;
-	int count = 0;
-	while (vertex != -1) {
-		PRINT_VALUES(vertex, dist[vertex]);
-		vertex = dad[vertex];
-	}
+//	int vertex = target_vertex;
+//	int count = 0;
+//	while (vertex != -1) {
+//		PRINT_VALUES(vertex, dist[vertex]);
+//		vertex = dad[vertex];
+//	}
 }
 
 //int main() {

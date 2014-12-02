@@ -16,8 +16,8 @@
 
 #define GRAPH_TYPE_1 1
 #define GRAPH_TYPE_2 2
-#define GRAPH_PAIRS 1
-#define VERTEX_PAIRS 1
+#define GRAPH_PAIRS 5
+#define VERTEX_PAIRS 5
 
 #define TOTAL_RESULTS (GRAPH_PAIRS*2*VERTEX_PAIRS)
 struct Network_Result {

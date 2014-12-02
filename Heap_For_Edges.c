@@ -114,18 +114,20 @@ struct Edge* get_max(struct Edge_Heap *heap) {
 }
 
 void heapsort(struct Edge_Heap *heap) {
-	PRINT_TEXT("...STARTING HEAPSORT")
+//	PRINT_TEXT("...STARTING HEAPSORT")
 	int i;
 	for (i = heap->curr_size / 2; i >= 0; i--) {
 		heapify_down_edge_heap(heap, i);
 	}
-
+	int heap_size = heap->curr_size;
 	for (i = heap->curr_size - 1; i >= 1; i--) {
 		heap->curr_size--;
+//		PRINT_VALUE(heap->A[0].weight)
 		swap_edge_heap_elements(heap, 0, heap->curr_size);
-		heapify_down_edge_heap(heap, i);
+		heapify_down_edge_heap(heap, 0);
 	}
-	PRINT_TEXT("...HEAPSORT END")
+	heap->curr_size = heap_size;
+//	PRINT_TEXT("...HEAPSORT END")
 }
 
 void print_sorted_edge_heap(struct Edge_Heap *heap) {
@@ -169,8 +171,9 @@ int right_child_index(int index) {
 //		PRINT_VALUES(vertex, edge_weight);
 //		insert_edge_heap(heap, vertex++, rand() % 10, edge_weight);
 //	}
-//	print_edge_heap(heap);
-//	print_sorted_edge_heap(heap);
+//	heapsort(heap);
+////	print_edge_heap(heap);
+////	print_sorted_edge_heap(heap);
 //
 //	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
 //	printf("\n\nTotal Time Taken: %f\n\n", cpu_time);
