@@ -44,9 +44,10 @@ void link_creation(struct Graph*, int, int);
 /*Create a link of provided weight between source vertex and target vertex, not maintaining the degree*/
 void link_creation_with_weight(struct Graph*, int, int, int);
 
-/*Return an empty adjacency matrix for graph*/
+/*Return an empty matrix for graph*/
 int** allocate_2D_matrix(int, int);
 
 /*Get a random vertex using random vertex function*/
 int get_vertex(struct Graph *, int *, int **, int, int);
+
 #endif /* GRAPH_H_ */

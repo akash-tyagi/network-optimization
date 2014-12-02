@@ -1,6 +1,6 @@
 /*
  * Heap_For_Edges.h
- *
+ *Max-Heap which stores elements of type edges
  *  Created on: 27-Nov-2014
  *      Author: akash
  */

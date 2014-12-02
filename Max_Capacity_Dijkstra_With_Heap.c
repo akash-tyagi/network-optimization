@@ -62,25 +62,26 @@ double dijsktra_with_heap(struct Graph *graph, struct Dijkstra_Arrays* results,
 	}
 	print_max_capacity_path_dijkstra_2(results, source_vertex, target_vertex);
 	cpu_time = ((double) (clock() - start)) / CLOCKS_PER_SEC;
-	printf("Total Time Taken: %f\n", cpu_time);
-	PRINT_TEXT("...Dijkstra With Heap Done...");
+	printf("DIJKSTRA WITH HEAP DONE, TIME TAKEN %f\n", cpu_time);
 	PRINT_TEXT("_________________________________________________");
 	return cpu_time;
 }
 
 void print_max_capacity_path_dijkstra_2(struct Dijkstra_Arrays* results,
 		int source_vertex, int target_vertex) {
-//	PRINT_TEXT("..Printing Path..");
-	int *dad = results->dad;
-	int *dist = results->dist;
 	PRINT_TEXT_VALUE("Max Capacity Path:", results->dist[target_vertex])
-//	printf("Path:\n");
-//	int vertex = target_vertex;
-//	int count = 0;
-//	while (vertex != -1) {
-//		PRINT_VALUES(vertex, dist[vertex]);
-//		vertex = dad[vertex];
-//	}
+	if (PRINT_MAX_CAPACITY_PATH) {
+		PRINT_TEXT("..Printing Path..");
+		int *dad = results->dad;
+		int *dist = results->dist;
+		printf("Path:\n");
+		int vertex = target_vertex;
+		int count = 0;
+		while (vertex != -1) {
+			PRINT_VALUES(vertex, dist[vertex]);
+			vertex = dad[vertex];
+		}
+	}
 }
 
 //int main() {

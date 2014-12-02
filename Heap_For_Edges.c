@@ -41,7 +41,6 @@ void insert_edge_heap(struct Edge_Heap *heap, int vertex1, int vertex2,
 		}
 		memcpy(a, heap->A, heap->max_size * sizeof(struct Edge));
 		heap->max_size = 2 * heap->max_size;
-//		PRINT_TEXT_VALUE("INCREASING SIZE TO:", heap->max_size)
 		heap->A = a;
 	}
 
@@ -51,12 +50,6 @@ void insert_edge_heap(struct Edge_Heap *heap, int vertex1, int vertex2,
 	heap->A[index].vertex1 = vertex1;
 	heap->A[index].vertex2 = vertex2;
 	heap->A[index].weight = edge_weight;
-
-//	while (parent_index(index) >= 0
-//			&& heap->A[parent_index(index)].weight < heap->A[index].weight) {
-//		swap_edge_heap_elements(heap, parent_index(index), index);
-//		index = parent_index(index);
-//	}
 }
 
 void heapify_down_edge_heap(struct Edge_Heap *heap, int index) {
@@ -114,7 +107,6 @@ struct Edge* get_max(struct Edge_Heap *heap) {
 }
 
 void heapsort(struct Edge_Heap *heap) {
-//	PRINT_TEXT("...STARTING HEAPSORT")
 	int i;
 	for (i = heap->curr_size / 2; i >= 0; i--) {
 		heapify_down_edge_heap(heap, i);
@@ -122,12 +114,10 @@ void heapsort(struct Edge_Heap *heap) {
 	int heap_size = heap->curr_size;
 	for (i = heap->curr_size - 1; i >= 1; i--) {
 		heap->curr_size--;
-//		PRINT_VALUE(heap->A[0].weight)
 		swap_edge_heap_elements(heap, 0, heap->curr_size);
 		heapify_down_edge_heap(heap, 0);
 	}
 	heap->curr_size = heap_size;
-//	PRINT_TEXT("...HEAPSORT END")
 }
 
 void print_sorted_edge_heap(struct Edge_Heap *heap) {

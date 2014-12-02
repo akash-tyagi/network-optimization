@@ -63,8 +63,7 @@ double kruskal(struct Graph *graph, int source_vertex, int target_vertex) {
 //	printGraph(new_graph);
 	print_max_capacity_path_krukskal(new_graph, source_vertex, target_vertex);
 
-	printf("Total Time Taken: %f\n", cpu_time);
-	PRINT_TEXT("...KRUSKAL DONE...");
+	printf("KRUSKAL DONE, TIME TAKEN: %f\n", cpu_time);
 	PRINT_TEXT("_________________________________________________");
 
 	for (i = 0; i < MAX_VERTICES; i++)
@@ -77,15 +76,16 @@ void print_max_capacity_path_krukskal(struct Graph* graph, int source_vertex,
 		int target_vertex) {
 	struct BFS_Result* bfs_result = breadth_first_search(graph, source_vertex,
 			target_vertex);
-
-	int vertex = target_vertex;
 	PRINT_TEXT_VALUE("MAX_CAPACITY PATH:", bfs_result->max_capacity);
-	PRINT_TEXT_VALUE("PRINTING PATH:", vertex);
-//	while (bfs_result->path[vertex][0] != -2) {
-//		PRINT_VALUES(bfs_result->path[vertex][0], bfs_result->path[vertex][1]);
-//		vertex = bfs_result->path[vertex][0];
-//	}
-
+	if (PRINT_MAX_CAPACITY_PATH) {
+		int vertex = target_vertex;
+		PRINT_TEXT_VALUE("PRINTING PATH:", vertex);
+		while (bfs_result->path[vertex][0] != -2) {
+			PRINT_VALUES(bfs_result->path[vertex][0],
+					bfs_result->path[vertex][1]);
+			vertex = bfs_result->path[vertex][0];
+		}
+	}
 }
 
 struct BFS_Result* breadth_first_search(struct Graph* graph, int source_vertex,
@@ -116,8 +116,6 @@ struct BFS_Result* breadth_first_search(struct Graph* graph, int source_vertex,
 				enqueue(queue, node->vertex);
 				path[node->vertex][0] = i;
 				path[node->vertex][1] = node->weight;
-//				if (max_capacity > node->weight)
-//					max_capacity = node->weight;
 			}
 			if (node->vertex == target_vertex)
 				break;
@@ -129,9 +127,7 @@ struct BFS_Result* breadth_first_search(struct Graph* graph, int source_vertex,
 	while (path[i][0] != -2) {
 		if (path[i][1] < max_capacity)
 			max_capacity = path[i][1];
-//		PRINT_VALUES(i, path[i][1]);
 		i = path[i][0];
-
 	}
 
 	bfs_result->max_capacity = max_capacity;

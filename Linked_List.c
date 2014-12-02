@@ -39,9 +39,6 @@ struct List_Node* get_max_fringe(struct List_Node **list) {
 		*list = max->next;
 	}
 	max->next = NULL;
-
-	//PRINT_TEXT_VALUE("--MAX FRINGE", max->vertex)
-	//PRINT_VALUE(max->dist)
 	return max;
 }
 
